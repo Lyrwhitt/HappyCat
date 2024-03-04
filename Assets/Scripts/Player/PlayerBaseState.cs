@@ -37,7 +37,7 @@ public class PlayerBaseState : IState
     public virtual void FixedUpdateState()
     {
 
-    }
+    } 
 
 
     protected virtual void AddInputActionsCallbacks()

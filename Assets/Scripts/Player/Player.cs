@@ -16,12 +16,15 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public Animator animator;
     [HideInInspector]
+    public AnimationEventReceiver animationEventReceiver;
+    [HideInInspector]
     public PlayerInput input;
     [HideInInspector]
     public CharacterController controller;
     [HideInInspector]
     public ForceReceiver forceReceiver;
 
+    public Test testGizmo;
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class Player : MonoBehaviour
 
         //rigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        animationEventReceiver = GetComponentInChildren<AnimationEventReceiver>();
         input = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
         forceReceiver = GetComponent<ForceReceiver>();
@@ -41,6 +45,23 @@ public class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         stateMachine.ChangeState(stateMachine.idleState);
     }
+
+    
+    private void OnDrawGizmos()
+    {
+        if (testGizmo == null)
+            return;
+
+        if (!testGizmo.testGizmo)
+            return;
+
+        // 디버그 모드에서 사각형 영역을 시각화합니다.
+        Gizmos.color = Color.red;
+
+        Gizmos.matrix = Matrix4x4.TRS(testGizmo.testGizmoCenter, testGizmo.testGizmoRotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, testGizmo.testGizmoSize);
+    }
+    
 
     private void Update()
     {

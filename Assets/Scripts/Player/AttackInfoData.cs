@@ -13,6 +13,8 @@ public class AttackInfoData
     [field: SerializeField][field: Range(0f, 3f)] public float forceTransitionTime;
     [field: SerializeField][field: Range(-10f, 30f)] public float force;
     [field: SerializeField][field: Range(0f, 1f)] public float drag;
+    [field: SerializeField] public Vector3 hitBox;
+    [field: SerializeField] public Vector3 hitBoxCenterOffset;
     [field: SerializeField] public bool isCancelable;
 
     [field: SerializeField] public int damage;

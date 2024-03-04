@@ -18,8 +18,8 @@ MonoBehaviour:
     <speedChangeRate>k__BackingField: 13
     <walkSpeedModifier>k__BackingField: 0.225
     <runSpeedModifier>k__BackingField: 1
-    dashSpeed: 20
-    dashTime: 0.17
+    dashPower: 30
+    dashDrag: 0.082
   <airData>k__BackingField:
     <jumpForce>k__BackingField: 7.5
   <attackData>k__BackingField:
@@ -30,6 +30,8 @@ MonoBehaviour:
       forceTransitionTime: 0
       force: 10
       drag: 0.1
+      hitBox: {x: 0.5, y: 1, z: 0.7}
+      hitBoxCenterOffset: {x: 0, y: 0.8, z: 0}
       isCancelable: 1
       damage: 5
     - attackName: Normal2
@@ -38,6 +40,8 @@ MonoBehaviour:
       forceTransitionTime: 0.12
       force: 10
       drag: 0.1
+      hitBox: {x: 0.5, y: 1, z: 0.7}
+      hitBoxCenterOffset: {x: 0, y: 0.8, z: 0}
       isCancelable: 1
       damage: 5
     - attackName: Normal3
@@ -46,6 +50,8 @@ MonoBehaviour:
       forceTransitionTime: 0
       force: 0
       drag: 0.1
+      hitBox: {x: 0.5, y: 1, z: 0.7}
+      hitBoxCenterOffset: {x: 0, y: 0.8, z: 0}
       isCancelable: 1
       damage: 5
     - attackName: Normal4
@@ -54,5 +60,7 @@ MonoBehaviour:
       forceTransitionTime: 0.06
       force: 10
       drag: 0.1
+      hitBox: {x: 0.5, y: 1, z: 0.7}
+      hitBoxCenterOffset: {x: 0, y: 0.8, z: 0}
       isCancelable: 1
       damage: 5

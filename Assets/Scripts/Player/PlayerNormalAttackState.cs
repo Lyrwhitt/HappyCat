@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerNormalAttackState : PlayerAttackState
@@ -18,6 +19,8 @@ public class PlayerNormalAttackState : PlayerAttackState
     {
         base.EnterState();
 
+        stateMachine.player.animationEventReceiver.animationEvent += DamageEnemy;
+
         SetAnimationBool(stateMachine.player.animationData.comboAttackParameterHash, true);
 
         alreadyApplyForce = false;
@@ -32,11 +35,35 @@ public class PlayerNormalAttackState : PlayerAttackState
     {
         base.ExitState();
 
+        stateMachine.player.animationEventReceiver.animationEvent -= DamageEnemy;
+
         SetAnimationBool(stateMachine.player.animationData.comboAttackParameterHash, false);
 
         // 콤보에 성공 하지 못했을떄
         if (!alreadyApplyCombo)
             stateMachine.comboIndex = 0;
+    }
+
+    public void DamageEnemy()
+    {
+        // 플레이어의 위치와 방향을 기준으로 사각형 모양의 영역을 생성합니다.
+        Vector3 boxCenter = attackInfoData.hitBoxCenterOffset + stateMachine.player.transform.position + stateMachine.player.transform.forward *
+            attackInfoData.hitBox.z / 2f;
+        Quaternion boxRotation = Quaternion.LookRotation(stateMachine.player.transform.forward);
+
+        stateMachine.player.testGizmo = new Test(true, attackInfoData.hitBox, boxCenter, boxRotation);
+
+        // OverlapBox 함수를 통해 사각형 모양의 영역 안에 있는 적을 검출합니다.
+        Collider[] colliders = Physics.OverlapBox(boxCenter, attackInfoData.hitBox / 2f, boxRotation);
+
+        // 각각의 충돌한 오브젝트에 대해 처리합니다.
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                Debug.Log("맞았따");
+            }
+        }
     }
 
     private void TryComboAttack()

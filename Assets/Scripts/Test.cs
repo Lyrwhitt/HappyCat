@@ -2,30 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class Test
 {
-    private Animator testAnim;
+    public bool testGizmo;
+    public Vector3 testGizmoSize;
+    public Vector3 testGizmoCenter;
+    public Quaternion testGizmoRotation;
 
-    private void Start()
+    public Test(bool testGizmo, Vector3 testGizmoSize, Vector3 testGizmoCenter, Quaternion testGizmoRotation)
     {
-        testAnim = GetComponentInChildren<Animator>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            testAnim.SetBool("Fire", true);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            testAnim.SetBool("Run", true);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            testAnim.SetBool("Fire", false);
-            testAnim.SetBool("Run", false);
-        }
+        this.testGizmo = testGizmo;
+        this.testGizmoSize = testGizmoSize;
+        this.testGizmoCenter = testGizmoCenter;
+        this.testGizmoRotation = testGizmoRotation;
     }
 }
