@@ -28,27 +28,31 @@ MonoBehaviour:
       comboStateIndex: 1
       comboTransitionTime: 0.4
       forceTransitionTime: 0
-      force: 3
+      force: 10
+      drag: 0.1
       isCancelable: 1
       damage: 5
     - attackName: Normal2
       comboStateIndex: 2
       comboTransitionTime: 0.4
-      forceTransitionTime: 0
-      force: 2
+      forceTransitionTime: 0.12
+      force: 10
+      drag: 0.1
       isCancelable: 1
       damage: 5
     - attackName: Normal3
       comboStateIndex: 3
       comboTransitionTime: 0.4
       forceTransitionTime: 0
-      force: 1
+      force: 0
+      drag: 0.1
       isCancelable: 1
       damage: 5
     - attackName: Normal4
       comboStateIndex: -1
       comboTransitionTime: 0.4
-      forceTransitionTime: 0
-      force: 2
+      forceTransitionTime: 0.06
+      force: 10
+      drag: 0.1
       isCancelable: 1
       damage: 5

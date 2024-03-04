@@ -1058,6 +1058,7 @@ MonoBehaviour:
     _walkParameterName: Walk
     _runParameterName: Run
     _speedParameterName: Speed
+    _dashParameterName: Dash
     _airParameterName: '@Air'
     _jumpParameterName: Jump
     _fallParameterName: Fall

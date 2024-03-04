@@ -59,6 +59,7 @@ public class PlayerNormalAttackState : PlayerAttackState
 
         // 전진공격
         stateMachine.player.forceReceiver.AddForce(stateMachine.player.transform.forward * attackInfoData.force);
+        stateMachine.player.forceReceiver.drag = attackInfoData.drag;
     }
 
     public override void UpdateState()
