@@ -29,9 +29,7 @@ public class ForceReceiver : MonoBehaviour
         // 타겟까지 감속도달
         impact = Vector3.SmoothDamp(impact, Vector3.zero, ref dampingVelocity, drag);
     }
-
-    // 에디터 모드에서만 호출 Runtime에서는 영향을 주지 않는다.
-    public void Reset()
+    public void ResetForceReceiver()
     {
         impact = Vector3.zero;
         verticalVelocity = 0f;

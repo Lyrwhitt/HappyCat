@@ -55,7 +55,7 @@ public class PlayerNormalAttackState : PlayerAttackState
 
         alreadyApplyForce = true;
 
-        stateMachine.player.forceReceiver.Reset();
+        stateMachine.player.forceReceiver.ResetForceReceiver();
 
         // 전진공격
         stateMachine.player.forceReceiver.AddForce(stateMachine.player.transform.forward * attackInfoData.force);

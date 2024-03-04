@@ -19,6 +19,6 @@ public class PlayerGroundData
     [field: SerializeField][field: Range(0f, 2f)] public float runSpeedModifier { get; private set; } = 1f;
 
     [field: Header("DashData")]
-    [field: SerializeField][field: Range(0f, 20f)] public float dashSpeed = 5f;
-    [field: SerializeField][field: Range(0f, 20f)] public float dashTime = 5f;
+    [field: SerializeField][field: Range(0f, 30f)] public float dashPower = 5f;
+    [field: SerializeField][field: Range(0f, 1f)] public float dashDrag = 0.3f;
 }

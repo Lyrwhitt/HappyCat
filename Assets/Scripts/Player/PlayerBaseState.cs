@@ -95,6 +95,7 @@ public class PlayerBaseState : IState
 
     }
 
+    // 인풋 안받는 무브
     protected void ForceMove()
     {
         stateMachine.player.controller.Move(stateMachine.player.forceReceiver.Movement * Time.deltaTime);
