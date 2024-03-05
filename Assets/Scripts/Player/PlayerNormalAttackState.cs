@@ -61,7 +61,11 @@ public class PlayerNormalAttackState : PlayerAttackState
         {
             if (collider.CompareTag("Enemy"))
             {
-                Debug.Log("¸Â¾Òµû");
+                if (collider.transform.TryGetComponent(out Health health))
+                {
+                    EffectManager.Instance.PlayEffect("PunchEffect", boxCenter);
+                    health.TakeDamage(attackInfoData.damage);
+                }
             }
         }
     }
