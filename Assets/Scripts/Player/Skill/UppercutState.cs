@@ -1,34 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerNormalAttackState : PlayerAttackState
+public class UppercutState : PlayerSkillState
 {
     private bool alreadyApplyForce;
-    private bool alreadyApplyCombo;
 
     AttackInfoData attackInfoData;
 
-    public PlayerNormalAttackState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
+    public UppercutState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
     {
-
+        attackInfoData = Resources.Load<PlayerSkillSO>("Skills/Uppercut").attackData.AttackInfoDatas[0];
     }
 
     public override void EnterState()
     {
         base.EnterState();
 
+        alreadyApplyForce = false;
+
         stateMachine.player.animationEventReceiver.animationEvent += DamageEnemy;
 
-        SetAnimationBool(stateMachine.player.animationData.comboAttackParameterHash, true);
-
-        alreadyApplyForce = false;
-        alreadyApplyCombo = false;
-
-        int comboIndex = stateMachine.comboIndex;
-        attackInfoData = stateMachine.player.data.attackData.GetAttackInfo(comboIndex);
-        stateMachine.player.animator.SetInteger("Combo", comboIndex);
+        SetAnimationBool(stateMachine.player.animationData.uppercutParameterHash, true);
     }
 
     public override void ExitState()
@@ -37,11 +30,7 @@ public class PlayerNormalAttackState : PlayerAttackState
 
         stateMachine.player.animationEventReceiver.animationEvent -= DamageEnemy;
 
-        SetAnimationBool(stateMachine.player.animationData.comboAttackParameterHash, false);
-
-        // 콤보에 성공 하지 못했을떄
-        if (!alreadyApplyCombo)
-            stateMachine.comboIndex = 0;
+        SetAnimationBool(stateMachine.player.animationData.uppercutParameterHash, false);
     }
 
     public void DamageEnemy()
@@ -67,28 +56,18 @@ public class PlayerNormalAttackState : PlayerAttackState
                     health.TakeDamage(attackInfoData.damage);
                 }
 
-                if(collider.transform.TryGetComponent(out Rigidbody rigidbody))
+                if (collider.transform.TryGetComponent(out Rigidbody rigidbody))
                 {
                     rigidbody.velocity = Vector3.zero;
-                    rigidbody.AddForce(stateMachine.player.transform.forward * 20f + collider.transform.up * 150f);
+                    rigidbody.AddForce(stateMachine.player.transform.forward * 20f + collider.transform.up * 350f);
                 }
             }
         }
     }
 
-    private void TryComboAttack()
-    { 
-        if (alreadyApplyCombo) return;
-        // 마지막 공격까지 했을 때
-        if (attackInfoData.comboStateIndex == -1) return;
-        if (!stateMachine.isAttacking) return;
-
-        alreadyApplyCombo = true;
-    }
-
     private void TryApplyForce()
     {
-        if(alreadyApplyForce) return;
+        if (alreadyApplyForce) return;
 
         alreadyApplyForce = true;
 
@@ -105,25 +84,13 @@ public class PlayerNormalAttackState : PlayerAttackState
 
         ForceMove();
 
-        float normalizedTime = GetNormalizedTime(stateMachine.player.animator, "Attack");
+        float normalizedTime = GetNormalizedTime(stateMachine.player.animator, "Uppercut");
 
         if (normalizedTime < 1f)
         {
             // 지정한 트랜지션 타임이 지난 후 힘, 콤보 적용
             if (normalizedTime >= attackInfoData.forceTransitionTime)
                 TryApplyForce();
-
-            if (normalizedTime >= attackInfoData.comboTransitionTime)
-            {
-                TryComboAttack();
-
-                if (alreadyApplyCombo)
-                {
-                    // 콤보가 증가하는 곳 (AttackData의 각 공격은 다음 공격의 인덱스를 가지고있다)
-                    stateMachine.comboIndex = attackInfoData.comboStateIndex;
-                    stateMachine.ChangeState(stateMachine.normalAttackState);
-                }
-            }
         }
         // 모션 다보고 진행
         else

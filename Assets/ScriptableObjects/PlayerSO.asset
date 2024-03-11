@@ -30,7 +30,7 @@ MonoBehaviour:
       forceTransitionTime: 0
       force: 10
       drag: 0.1
-      hitBox: {x: 0.6, y: 1, z: 0.7}
+      hitBox: {x: 0.6, y: 1, z: 0.85}
       hitBoxCenterOffset: {x: 0, y: 0.9, z: 0}
       isCancelable: 1
       damage: 5
@@ -38,9 +38,9 @@ MonoBehaviour:
       comboStateIndex: 2
       comboTransitionTime: 0.4
       forceTransitionTime: 0.12
-      force: 10
+      force: 5.5
       drag: 0.1
-      hitBox: {x: 0.6, y: 1, z: 0.7}
+      hitBox: {x: 0.6, y: 1, z: 0.85}
       hitBoxCenterOffset: {x: 0, y: 0.9, z: 0}
       isCancelable: 1
       damage: 5
@@ -50,7 +50,7 @@ MonoBehaviour:
       forceTransitionTime: 0
       force: 0
       drag: 0.1
-      hitBox: {x: 0.6, y: 1, z: 0.7}
+      hitBox: {x: 0.6, y: 1, z: 0.85}
       hitBoxCenterOffset: {x: 0, y: 0.9, z: 0}
       isCancelable: 1
       damage: 5
@@ -58,9 +58,9 @@ MonoBehaviour:
       comboStateIndex: -1
       comboTransitionTime: 0.4
       forceTransitionTime: 0.06
-      force: 10
+      force: 5.8
       drag: 0.1
-      hitBox: {x: 0.6, y: 1, z: 0.7}
+      hitBox: {x: 0.6, y: 1, z: 0.85}
       hitBoxCenterOffset: {x: 0, y: 0.9, z: 0}
       isCancelable: 1
       damage: 5

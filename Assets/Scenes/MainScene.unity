@@ -745,8 +745,9 @@ GameObject:
   - component: {fileID: 893110163}
   - component: {fileID: 893110162}
   - component: {fileID: 893110161}
-  - component: {fileID: 893110160}
   - component: {fileID: 893110164}
+  - component: {fileID: 893110166}
+  - component: {fileID: 893110165}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Enemy
@@ -754,29 +755,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!136 &893110160
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 893110159}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &893110161
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -835,7 +813,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893110159}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.56, y: 1.28, z: 1.39}
+  m_LocalPosition: {x: 2.56, y: 3.281, z: 1.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -854,7 +832,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec8f6e3062b060c4881f160d695c5baf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusData: {fileID: 0}
+  statusData: {fileID: 11400000, guid: 82d7d689d88602d44b45cf36bf503717, type: 2}
+--- !u!54 &893110165
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893110159}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!136 &893110166
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893110159}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &1354913202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,6 +1259,7 @@ GameObject:
   - component: {fileID: 1936198376}
   - component: {fileID: 1936198377}
   - component: {fileID: 1936198378}
+  - component: {fileID: 1936198379}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1293,6 +1322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e421923602554a4c95352a6bde5f7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillController: {fileID: 0}
   data: {fileID: 11400000, guid: 845514d352c6e894c9cc099e9600038d, type: 2}
   animationData:
     _groundParameterName: '@Ground'
@@ -1306,6 +1336,8 @@ MonoBehaviour:
     _fallParameterName: Fall
     _attackParameterName: '@Attack'
     _comboAttackParameterName: ComboAttack
+    _skillParameterName: '@Skill'
+    _uppercutParameterName: Uppercut
   animator: {fileID: 0}
   animationEventReceiver: {fileID: 0}
   input: {fileID: 0}
@@ -1351,6 +1383,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusData: {fileID: 11400000, guid: 536bc3e1b6dd9434eb6caeb5390b3126, type: 2}
+--- !u!114 &1936198379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936198372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fc3aed43a17c542bd7821e5c87f38c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &914026072068660925
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

@@ -62,6 +62,11 @@ public class PlayerGroundState : PlayerBaseState
         SetAnimationFloat(stateMachine.player.animationData.speedParameterHash, stateMachine.animationBlend);
     }
 
+    protected override void OnBtnQStarted(InputAction.CallbackContext obj)
+    {
+        stateMachine.player.skillController.qSkill.Execute();
+    }
+
     protected override void OnJumpStarted(InputAction.CallbackContext context)
     {
         stateMachine.ChangeState(stateMachine.jumpState);

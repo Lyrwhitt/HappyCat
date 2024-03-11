@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private PlayerStateMachine stateMachine;
+    public PlayerStateMachine stateMachine;
+    public PlayerSkillController skillController;
 
     [field: Header("References")]
     [field: SerializeField] public PlayerSO data;
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
         forceReceiver = GetComponent<ForceReceiver>();
 
         stateMachine = new PlayerStateMachine(this);
+        skillController = GetComponent<PlayerSkillController>();
     }
 
     private void Start()

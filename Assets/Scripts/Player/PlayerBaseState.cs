@@ -51,6 +51,8 @@ public class PlayerBaseState : IState
         input.playerActions.Attack.canceled += OnAttackCanceled;
 
         input.playerActions.Dash.started += OnDashStarted;
+
+        input.playerActions.Skill_Btn_Q.started += OnBtnQStarted;
     }
 
     protected virtual void RemoveInputActionsCallbacks()
@@ -64,6 +66,11 @@ public class PlayerBaseState : IState
         input.playerActions.Attack.canceled -= OnAttackCanceled;
 
         input.playerActions.Dash.started -= OnDashStarted;
+        input.playerActions.Skill_Btn_Q.started -= OnBtnQStarted;
+    }
+
+    protected virtual void OnBtnQStarted(InputAction.CallbackContext obj)
+    {
     }
 
     protected virtual void OnAttackPerformed(InputAction.CallbackContext obj)

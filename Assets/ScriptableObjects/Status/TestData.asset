@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906616425dd08fa4abfe729bacd1dc53, type: 3}
   m_Name: TestData
   m_EditorClassIdentifier: 
-  maxHP: 0
-  hp: 0
-  atk: 0
-  def: 0
+  maxHP: 1000
+  hp: 1000
+  atk: 100
+  def: 100

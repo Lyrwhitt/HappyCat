@@ -20,6 +20,9 @@ public class PlayerAnimationData
     [SerializeField] private string _attackParameterName = "@Attack";
     [SerializeField] private string _comboAttackParameterName = "ComboAttack";
 
+    [SerializeField] private string _skillParameterName = "@Skill";
+    [SerializeField] private string _uppercutParameterName = "Uppercut";
+
     public int groundParameterHash { get; private set; }
     public int idleParameterHash { get; private set; }
     public int walkParameterHash { get; private set; }
@@ -33,6 +36,9 @@ public class PlayerAnimationData
 
     public int attackParameterHash { get; private set; }
     public int comboAttackParameterHash { get; private set; }
+
+    public int skillParameterHash { get; private set; }
+    public int uppercutParameterHash { get; private set; }
 
     public void Initialize()
     {
@@ -49,5 +55,8 @@ public class PlayerAnimationData
 
         attackParameterHash = Animator.StringToHash(_attackParameterName);
         comboAttackParameterHash = Animator.StringToHash(_comboAttackParameterName);
+
+        skillParameterHash = Animator.StringToHash(_skillParameterName);
+        uppercutParameterHash = Animator.StringToHash(_uppercutParameterName);
     }
 }

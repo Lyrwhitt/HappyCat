@@ -15,6 +15,9 @@ public class PlayerStateMachine : StateMachine
     public PlayerNormalAttackState normalAttackState;
     public PlayerDashState dashState;
 
+    [Header("Skill State")]
+    public UppercutState uppercutState;
+
     [Header("Movement")]
     public float animationBlend = 0f;
     public Vector2 movementInput;
@@ -41,6 +44,8 @@ public class PlayerStateMachine : StateMachine
         fallState = new PlayerFallState(this);
         normalAttackState = new PlayerNormalAttackState(this);
         dashState = new PlayerDashState(this);
+
+        uppercutState = new UppercutState(this);
 
         mainCameraTransform = Camera.main.transform;
 
