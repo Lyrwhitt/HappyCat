@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     public CharacterController controller;
     [HideInInspector]
     public ForceReceiver forceReceiver;
+    [HideInInspector]
+    public Camera playerCamera;
 
     public Test testGizmo;
 
@@ -40,6 +42,8 @@ public class Player : MonoBehaviour
 
         stateMachine = new PlayerStateMachine(this);
         skillController = GetComponent<PlayerSkillController>();
+
+        playerCamera = Camera.main;
     }
 
     private void Start()

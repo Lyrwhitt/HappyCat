@@ -30,7 +30,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-    }
+    public Player player;
 }

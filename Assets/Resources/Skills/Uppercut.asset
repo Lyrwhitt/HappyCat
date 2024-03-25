@@ -18,7 +18,7 @@ MonoBehaviour:
       comboStateIndex: 1
       comboTransitionTime: 0.4
       forceTransitionTime: 0
-      force: 19.3
+      force: 16
       drag: 0.19
       hitBox: {x: 0.6, y: 1, z: 0.85}
       hitBoxCenterOffset: {x: 0, y: 0.9, z: 0}

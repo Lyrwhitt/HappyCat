@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ForceReceiver : MonoBehaviour
 {
-    [SerializeField] private CharacterController controller;
+    private CharacterController controller;
+
     public float drag = 0.3f;
     public float gravity = -9.8f;
 
@@ -14,6 +15,11 @@ public class ForceReceiver : MonoBehaviour
     private float verticalVelocity;
 
     public Vector3 Movement => impact + Vector3.up * verticalVelocity;
+
+    private void Awake()
+    {
+        controller = this.GetComponent<CharacterController>();
+    }
 
     private void Update()
     {
