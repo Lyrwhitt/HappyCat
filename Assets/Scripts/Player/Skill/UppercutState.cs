@@ -56,10 +56,10 @@ public class UppercutState : PlayerSkillState
                     health.TakeDamage(attackInfoData.damage);
                 }
 
-                if (collider.transform.TryGetComponent(out Rigidbody rigidbody))
+                if (collider.transform.TryGetComponent(out ForceReceiver forceReceiver))
                 {
-                    rigidbody.velocity = Vector3.zero;
-                    rigidbody.AddForce(stateMachine.player.transform.forward * 20f + collider.transform.up * 350f);
+                    //rigidbody.velocity = Vector3.zero;
+                    forceReceiver.AddForce(stateMachine.player.transform.forward * 3f + collider.transform.up * 12f);
                 }
             }
         }

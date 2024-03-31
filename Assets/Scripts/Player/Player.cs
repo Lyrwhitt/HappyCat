@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,8 @@ public class Player : MonoBehaviour
     public ForceReceiver forceReceiver;
     [HideInInspector]
     public Camera playerCamera;
+    [HideInInspector]
+    public CinemachineBrain playerCameraBrain;
 
     public Test testGizmo;
 
@@ -44,11 +47,12 @@ public class Player : MonoBehaviour
         skillController = GetComponent<PlayerSkillController>();
 
         playerCamera = Camera.main;
+        playerCameraBrain = playerCamera.GetComponent<CinemachineBrain>();
     }
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        GameManager.Instance.ChangeCursorLockMode(CursorLockMode.Locked);
         stateMachine.ChangeState(stateMachine.idleState);
     }
 
