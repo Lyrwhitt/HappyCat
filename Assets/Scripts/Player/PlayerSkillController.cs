@@ -6,6 +6,8 @@ public class PlayerSkillController : MonoBehaviour
 {
     private Player player;
 
+    private Dictionary<int, ICommand> skillDictionary = new Dictionary<int, ICommand>();
+
     public Uppercut uppercut;
 
     public ICommand qSkill;
@@ -19,11 +21,12 @@ public class PlayerSkillController : MonoBehaviour
 
     private void Start()
     {
-        qSkill = uppercut;
+        qSkill = skillDictionary[1001];
     }
 
     private void InitPlayerSkill()
     {
         uppercut = new Uppercut(this.player);
+        skillDictionary.Add(uppercut.attackID, uppercut);
     }
 }

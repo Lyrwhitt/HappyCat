@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Uppercut
   m_EditorClassIdentifier: 
   <attackData>k__BackingField:
+    attackID: 1001
+    attackImg: {fileID: 21300000, guid: 0b6d6946f0b22a04a947a73a96400f8b, type: 3}
+    attackName: "\uC5B4\uD37C\uCEF7"
+    attackDescription: "\uD558\uB298\uB192\uC774 \uC801\uC744 \uB744\uC6B4\uB2E4."
+    cooldown: 5
     AttackInfoDatas:
-    - attackName: Uppercut
-      comboStateIndex: 1
+    - comboStateIndex: 1
       comboTransitionTime: 0.4
       forceTransitionTime: 0
       force: 16

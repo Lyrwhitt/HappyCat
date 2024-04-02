@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     [field: Header("References")]
     [field: SerializeField] public PlayerSO data;
+    [field: SerializeField] public PlayerSkillSO[] skillDatas;
 
     [field: Header("Animation")]
     [field: SerializeField] public PlayerAnimationData animationData;

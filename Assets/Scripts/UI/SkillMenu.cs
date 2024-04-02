@@ -6,12 +6,26 @@ using UnityEngine.UI;
 public class SkillMenu : MonoBehaviour
 {
     public Button closeBtn;
+    public Transform content;
+
+    public UISkillInfo skillPrefab;
 
     private void Start()
     {
         this.gameObject.SetActive(false);
 
         closeBtn.onClick.AddListener(OpenSkillMenu);
+
+        SetPlayerSkillData();
+    }
+
+    public void SetPlayerSkillData()
+    {
+        for(int i = 0; i < GameManager.Instance.player.skillDatas.Length; i++)
+        {
+            UISkillInfo skill = Instantiate(skillPrefab, content);
+            skill.SetSkillData(GameManager.Instance.player.skillDatas[i]);
+        }
     }
 
     public void OpenSkillMenu()
