@@ -28,6 +28,9 @@ public class Uppercut : ICommand
 
     public void Execute()
     {
+        if (!player.controller.isGrounded)
+            return;
+
         player.stateMachine.ChangeState(player.stateMachine.uppercutState);
     }
 }

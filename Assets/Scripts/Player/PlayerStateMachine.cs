@@ -29,7 +29,7 @@ public class PlayerStateMachine : StateMachine
     public float jumpForce;
 
     [Header("Attack")]
-    public bool isAttacking;
+    public bool isAttacking = false;
     public int comboIndex;
 
     public Transform mainCameraTransform;

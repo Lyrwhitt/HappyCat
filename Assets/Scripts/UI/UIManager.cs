@@ -29,11 +29,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    [HideInInspector]
     public Canvas canvas;
 
     private void Start()
     {
-        if(canvas == null)
+        canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
+
+        if (canvas == null)
         {
             Canvas obj = Resources.Load(string.Concat("UI/", "Canvas"), typeof(Canvas)) as Canvas;
             if (obj == null)
