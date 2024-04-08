@@ -89,6 +89,51 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill_Btn_E"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9027b7f-a212-4bcf-9545-878fe3cb013d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill_Btn_R"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b8798e5-dde5-4f22-9bf6-a44b1a91edab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill_Btn_T"",
+                    ""type"": ""Button"",
+                    ""id"": ""0462cbd1-26e5-4eb8-9c5a-5059fb77ffd7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill_Btn_F"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb59693a-3cb9-438e-a6b5-6a06f68b6846"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill_Btn_G"",
+                    ""type"": ""Button"",
+                    ""id"": ""249d8f57-b3f8-469d-9290-bba368e83e4a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +257,61 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Skill_Btn_Q"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f7cb35a-82b5-402b-9861-8b8543a32a52"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill_Btn_E"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a0d47e1-490b-45fb-88bc-a2ec756d09cc"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill_Btn_R"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff4a828e-cbc6-42fc-afec-e88400da2ff4"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill_Btn_T"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b80b31d-a742-4092-b77c-455b58a40dde"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill_Btn_F"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80aae615-9c2a-467b-9a86-958c81ea634d"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill_Btn_G"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -227,6 +327,11 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Skill_Btn_Q = m_Player.FindAction("Skill_Btn_Q", throwIfNotFound: true);
+        m_Player_Skill_Btn_E = m_Player.FindAction("Skill_Btn_E", throwIfNotFound: true);
+        m_Player_Skill_Btn_R = m_Player.FindAction("Skill_Btn_R", throwIfNotFound: true);
+        m_Player_Skill_Btn_T = m_Player.FindAction("Skill_Btn_T", throwIfNotFound: true);
+        m_Player_Skill_Btn_F = m_Player.FindAction("Skill_Btn_F", throwIfNotFound: true);
+        m_Player_Skill_Btn_G = m_Player.FindAction("Skill_Btn_G", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -295,6 +400,11 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Skill_Btn_Q;
+    private readonly InputAction m_Player_Skill_Btn_E;
+    private readonly InputAction m_Player_Skill_Btn_R;
+    private readonly InputAction m_Player_Skill_Btn_T;
+    private readonly InputAction m_Player_Skill_Btn_F;
+    private readonly InputAction m_Player_Skill_Btn_G;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -306,6 +416,11 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Skill_Btn_Q => m_Wrapper.m_Player_Skill_Btn_Q;
+        public InputAction @Skill_Btn_E => m_Wrapper.m_Player_Skill_Btn_E;
+        public InputAction @Skill_Btn_R => m_Wrapper.m_Player_Skill_Btn_R;
+        public InputAction @Skill_Btn_T => m_Wrapper.m_Player_Skill_Btn_T;
+        public InputAction @Skill_Btn_F => m_Wrapper.m_Player_Skill_Btn_F;
+        public InputAction @Skill_Btn_G => m_Wrapper.m_Player_Skill_Btn_G;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -336,6 +451,21 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Skill_Btn_Q.started += instance.OnSkill_Btn_Q;
             @Skill_Btn_Q.performed += instance.OnSkill_Btn_Q;
             @Skill_Btn_Q.canceled += instance.OnSkill_Btn_Q;
+            @Skill_Btn_E.started += instance.OnSkill_Btn_E;
+            @Skill_Btn_E.performed += instance.OnSkill_Btn_E;
+            @Skill_Btn_E.canceled += instance.OnSkill_Btn_E;
+            @Skill_Btn_R.started += instance.OnSkill_Btn_R;
+            @Skill_Btn_R.performed += instance.OnSkill_Btn_R;
+            @Skill_Btn_R.canceled += instance.OnSkill_Btn_R;
+            @Skill_Btn_T.started += instance.OnSkill_Btn_T;
+            @Skill_Btn_T.performed += instance.OnSkill_Btn_T;
+            @Skill_Btn_T.canceled += instance.OnSkill_Btn_T;
+            @Skill_Btn_F.started += instance.OnSkill_Btn_F;
+            @Skill_Btn_F.performed += instance.OnSkill_Btn_F;
+            @Skill_Btn_F.canceled += instance.OnSkill_Btn_F;
+            @Skill_Btn_G.started += instance.OnSkill_Btn_G;
+            @Skill_Btn_G.performed += instance.OnSkill_Btn_G;
+            @Skill_Btn_G.canceled += instance.OnSkill_Btn_G;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -361,6 +491,21 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Skill_Btn_Q.started -= instance.OnSkill_Btn_Q;
             @Skill_Btn_Q.performed -= instance.OnSkill_Btn_Q;
             @Skill_Btn_Q.canceled -= instance.OnSkill_Btn_Q;
+            @Skill_Btn_E.started -= instance.OnSkill_Btn_E;
+            @Skill_Btn_E.performed -= instance.OnSkill_Btn_E;
+            @Skill_Btn_E.canceled -= instance.OnSkill_Btn_E;
+            @Skill_Btn_R.started -= instance.OnSkill_Btn_R;
+            @Skill_Btn_R.performed -= instance.OnSkill_Btn_R;
+            @Skill_Btn_R.canceled -= instance.OnSkill_Btn_R;
+            @Skill_Btn_T.started -= instance.OnSkill_Btn_T;
+            @Skill_Btn_T.performed -= instance.OnSkill_Btn_T;
+            @Skill_Btn_T.canceled -= instance.OnSkill_Btn_T;
+            @Skill_Btn_F.started -= instance.OnSkill_Btn_F;
+            @Skill_Btn_F.performed -= instance.OnSkill_Btn_F;
+            @Skill_Btn_F.canceled -= instance.OnSkill_Btn_F;
+            @Skill_Btn_G.started -= instance.OnSkill_Btn_G;
+            @Skill_Btn_G.performed -= instance.OnSkill_Btn_G;
+            @Skill_Btn_G.canceled -= instance.OnSkill_Btn_G;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -387,5 +532,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnSkill_Btn_Q(InputAction.CallbackContext context);
+        void OnSkill_Btn_E(InputAction.CallbackContext context);
+        void OnSkill_Btn_R(InputAction.CallbackContext context);
+        void OnSkill_Btn_T(InputAction.CallbackContext context);
+        void OnSkill_Btn_F(InputAction.CallbackContext context);
+        void OnSkill_Btn_G(InputAction.CallbackContext context);
     }
 }

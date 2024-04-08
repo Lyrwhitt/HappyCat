@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerSkillController : MonoBehaviour
 {
+    //DataManager<SkillData> skillDataManager = new DataManager<SkillData>("skillData.json");
+
     private PlayerSkillModel playerSkillModel;
     public PlayerSkillView playerSkillView;
 
@@ -13,14 +15,6 @@ public class PlayerSkillController : MonoBehaviour
     public PlayerInputAction.PlayerActions playerActions;
 
     private Player player;
-
-    /*
-    private Dictionary<int, ICommand> skillDictionary = new Dictionary<int, ICommand>();
-
-    public Uppercut uppercut;
-
-    public ICommand qSkill;
-    */
 
     private void Awake()
     {
@@ -31,15 +25,12 @@ public class PlayerSkillController : MonoBehaviour
         inputAction = new PlayerInputAction();
         playerActions = inputAction.Player;
 
-        //InitPlayerSkill();
         playerSkillModel.InitPlayerSkill(player);
     }
 
     private void Start()
     {
         AddInputActionsCallbacks();
-
-        //qSkill = skillDictionary[1001];
     }
 
     private void OnEnable()
@@ -55,23 +46,39 @@ public class PlayerSkillController : MonoBehaviour
     private void AddInputActionsCallbacks()
     {
         playerActions.Skill_Btn_Q.started += OnBtnQStarted;
+        playerActions.Skill_Btn_E.started += OnBtnEStarted;
+        playerActions.Skill_Btn_R.started += OnBtnRStarted;
+        playerActions.Skill_Btn_T.started += OnBtnTStarted;
+        playerActions.Skill_Btn_F.started += OnBtnFStarted;
+        playerActions.Skill_Btn_G.started += OnBtnGStarted;
     }
 
     private void OnBtnQStarted(InputAction.CallbackContext obj)
     {
-        /*
-        if (qSkill != null)
-            qSkill.Execute();
-        */
         playerSkillModel.UseSkill(playerSkillView.btnQ.GetSkill());
     }
 
-    
-    /*
-    private void InitPlayerSkill()
+    private void OnBtnEStarted(InputAction.CallbackContext obj)
     {
-        uppercut = new Uppercut(this.player);
-        skillDictionary.Add(uppercut.attackID, uppercut);
+        playerSkillModel.UseSkill(playerSkillView.btnE.GetSkill());
     }
-    */
+
+    private void OnBtnRStarted(InputAction.CallbackContext obj)
+    {
+        playerSkillModel.UseSkill(playerSkillView.btnR.GetSkill());
+    }
+
+    private void OnBtnTStarted(InputAction.CallbackContext obj)
+    {
+        playerSkillModel.UseSkill(playerSkillView.btnT.GetSkill());
+    }
+
+    private void OnBtnFStarted(InputAction.CallbackContext obj)
+    {
+        playerSkillModel.UseSkill(playerSkillView.btnF.GetSkill());
+    }
+    private void OnBtnGStarted(InputAction.CallbackContext obj)
+    {
+        playerSkillModel.UseSkill(playerSkillView.btnG.GetSkill());
+    }
 }

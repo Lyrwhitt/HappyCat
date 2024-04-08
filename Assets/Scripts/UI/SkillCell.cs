@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SkillCell : MonoBehaviour
 {
-    private DragDropSkillItem skill;
+    [HideInInspector] public DragDropSkillItem skill;
     private Transform cellImgTransform;
 
     private void Start()
@@ -26,7 +26,7 @@ public class SkillCell : MonoBehaviour
 
     public void RemoveSkill()
     {
-        skill = null;
         Destroy(skill.gameObject);
+        skill = null;
     }
 }

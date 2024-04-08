@@ -8,12 +8,14 @@ public class Uppercut : ICommand
     private Player player;
 
     public int attackID;
+    public int skillLevel;
 
     public Uppercut(Player player)
     {
         this.player = player;
+        skillLevel = 0;
 
-        for(int i = 0; i < player.skillDatas.Length; i++)
+        for (int i = 0; i < player.skillDatas.Length; i++)
         {
             PlayerSkillSO skillData = player.skillDatas[i];
 

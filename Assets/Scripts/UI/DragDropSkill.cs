@@ -42,7 +42,6 @@ public class DragDropSkill : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log(eventData.pointerEnter.name);
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
@@ -50,8 +49,15 @@ public class DragDropSkill : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
         {
             //rectTransform.position = eventData.pointerEnter.transform.position;
             SkillCell skillCell = eventData.pointerEnter.GetComponent<SkillCell>();
+
+            if (skillCell.skill != null)
+            {
+                skillCell.RemoveSkill();
+            }
+
             skillCell.SetSkill(dragDropItem);
 
+            dragDropItem.canvasGroup.blocksRaycasts = true;
             rectTransform.position = eventData.pointerEnter.transform.position;
         }
         else
