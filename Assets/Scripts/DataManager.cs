@@ -8,9 +8,9 @@ public class DataManager<T>
 {
     private string filePath;
 
-    public DataManager(string fileName)
+    public DataManager(string filePath)
     {
-        this.filePath = Path.Combine(Application.persistentDataPath, fileName);
+        this.filePath = filePath;
     }
 
     public void SaveData(T data)

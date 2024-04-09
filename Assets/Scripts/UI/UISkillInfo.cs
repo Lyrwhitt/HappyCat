@@ -8,15 +8,26 @@ using UnityEngine.UI;
 public class UISkillInfo : MonoBehaviour
 {
     [HideInInspector] public PlayerSkillSO skillSO;
+    private int skillPoint = 0;
 
     public Image skillIcon;
-    public TextMeshProUGUI skillName;
-    public TextMeshProUGUI skillDescription;
-    public TextMeshProUGUI skillPoint;
+    public TextMeshProUGUI skillNameText;
+    public TextMeshProUGUI skillDescriptionText;
+    public TextMeshProUGUI skillPointText;
 
-    public void SetSkillData(PlayerSkillSO playerSkillSO)
+    public Button pointUpBtn;
+    public Button pointDownBtn;
+
+    private void Awake()
+    {
+        pointUpBtn.onClick.AddListener(OnPointUpBtnClicked);
+        pointDownBtn.onClick.AddListener(OnPointDownBtnClicked);
+    }
+
+    public void SetSkillData(PlayerSkillSO playerSkillSO, int skillPoint)
     {
         skillSO = playerSkillSO;
+        this.skillPoint = skillPoint;
 
         SetSkillUI();
     }
@@ -24,7 +35,20 @@ public class UISkillInfo : MonoBehaviour
     private void SetSkillUI()
     {
         skillIcon.sprite = skillSO.attackData.attackImg;
-        skillName.SetText(skillSO.attackData.attackName);
-        skillDescription.SetText(skillSO.attackData.attackDescription);
+        skillNameText.SetText(skillSO.attackData.attackName);
+        skillDescriptionText.SetText(skillSO.attackData.attackDescription);
+        skillPointText.SetText(skillPoint.ToString());
+    }
+
+    private void OnPointUpBtnClicked()
+    {
+        skillPoint += 1;
+        skillPointText.SetText(skillPoint.ToString());
+    }
+
+    private void OnPointDownBtnClicked()
+    {
+        skillPoint -= 1;
+        skillPointText.SetText(skillPoint.ToString());
     }
 }

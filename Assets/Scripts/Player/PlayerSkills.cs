@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Uppercut : ICommand
@@ -8,12 +9,12 @@ public class Uppercut : ICommand
     private Player player;
 
     public int attackID;
-    public int skillLevel;
+    private int skillLevel;
 
     public Uppercut(Player player)
     {
         this.player = player;
-        skillLevel = 0;
+        this.skillLevel = 1;
 
         for (int i = 0; i < player.skillDatas.Length; i++)
         {
@@ -34,5 +35,10 @@ public class Uppercut : ICommand
             return;
 
         player.stateMachine.ChangeState(player.stateMachine.uppercutState);
+    }
+
+    public void SetSkillLevel(int skillLevel)
+    {
+        this.skillLevel = skillLevel;
     }
 }

@@ -43,9 +43,11 @@ public class Player : MonoBehaviour
         input = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
         forceReceiver = GetComponent<ForceReceiver>();
+        skillController = GetComponent<PlayerSkillController>();
+
+        skillController.SetSkillController(this);
 
         stateMachine = new PlayerStateMachine(this);
-        skillController = GetComponent<PlayerSkillController>();
 
         playerCamera = Camera.main;
         playerCameraBrain = playerCamera.GetComponent<CinemachineBrain>();

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class PlayerSkillController : MonoBehaviour
 {
-    //DataManager<SkillData> skillDataManager = new DataManager<SkillData>("skillData.json");
+    private DataManager<Dictionary<int, int>> skillDataManager;
+    public Dictionary<int, int> skillLevelData = new Dictionary<int, int>();
 
     private PlayerSkillModel playerSkillModel;
     public PlayerSkillView playerSkillView;
@@ -18,14 +21,18 @@ public class PlayerSkillController : MonoBehaviour
 
     private void Awake()
     {
-        playerSkillModel = new PlayerSkillModel();
+        /*
+        //player = GetComponent<Player>();
 
-        player = GetComponent<Player>();
+        // Player¶û ²¿ÀÓ
+        skillDataManager = new DataManager<Dictionary<int, int>>(Path.Combine(Application.persistentDataPath, "SkillLevelData.json"));
+        playerSkillModel = new PlayerSkillModel(player);
 
         inputAction = new PlayerInputAction();
         playerActions = inputAction.Player;
 
-        playerSkillModel.InitPlayerSkill(player);
+        SetSkillLevelData();
+        */
     }
 
     private void Start()
@@ -41,6 +48,29 @@ public class PlayerSkillController : MonoBehaviour
     private void OnDisable()
     {
         inputAction.Disable();
+    }
+
+    public void SetSkillController(Player player)
+    {
+        this.player = player;
+
+        skillDataManager = new DataManager<Dictionary<int, int>>(Path.Combine(Application.persistentDataPath, "SkillLevelData.json"));
+        playerSkillModel = new PlayerSkillModel(player);
+
+        inputAction = new PlayerInputAction();
+        playerActions = inputAction.Player;
+
+        SetSkillLevelData();
+    }
+
+    private void SetSkillLevelData()
+    {
+        skillLevelData = skillDataManager.LoadData();
+
+        if (skillLevelData == null)
+            skillLevelData = playerSkillModel.InitPlayerSkillLevel();
+        else
+            playerSkillModel.InitPlayerSkillLevel(skillLevelData);
     }
 
     private void AddInputActionsCallbacks()

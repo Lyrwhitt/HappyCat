@@ -6,11 +6,15 @@ public class UppercutState : PlayerSkillState
 {
     private bool alreadyApplyForce;
 
-    AttackInfoData attackInfoData;
+    private PlayerAttackData attackData;
+    private AttackInfoData attackInfoData;
+    private int skillLevel;
 
     public UppercutState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
     {
-        attackInfoData = Resources.Load<PlayerSkillSO>("Skills/Uppercut").attackData.AttackInfoDatas[0];
+        attackData = Resources.Load<PlayerSkillSO>("Skills/Uppercut").attackData;
+        attackInfoData = attackData.AttackInfoDatas[0];
+        skillLevel = stateMachine.player.skillController.skillLevelData[attackData.attackID];
     }
 
     public override void EnterState()
@@ -53,7 +57,7 @@ public class UppercutState : PlayerSkillState
                 if (collider.transform.TryGetComponent(out Health health))
                 {
                     EffectManager.Instance.PlayEffect("PunchEffect", boxCenter);
-                    health.TakeDamage(attackInfoData.damage);
+                    health.TakeDamage(attackInfoData.damage * skillLevel);
                 }
 
                 if (collider.transform.TryGetComponent(out ForceReceiver forceReceiver))

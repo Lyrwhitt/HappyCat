@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SkillMenu : MonoBehaviour
 {
+    private Player player;
+
     public Button closeBtn;
     public Transform content;
 
@@ -12,6 +14,8 @@ public class SkillMenu : MonoBehaviour
 
     private void Start()
     {
+        player = GameManager.Instance.player;
+
         this.gameObject.SetActive(false);
 
         closeBtn.onClick.AddListener(OpenSkillMenu);
@@ -21,10 +25,11 @@ public class SkillMenu : MonoBehaviour
 
     public void SetPlayerSkillData()
     {
-        for(int i = 0; i < GameManager.Instance.player.skillDatas.Length; i++)
+        for(int i = 0; i < player.skillDatas.Length; i++)
         {
             UISkillInfo skill = Instantiate(skillPrefab, content);
-            skill.SetSkillData(GameManager.Instance.player.skillDatas[i]);
+            skill.SetSkillData(player.skillDatas[i],
+                                player.skillController.skillLevelData[player.skillDatas[i].attackData.attackID]);
         }
     }
 
