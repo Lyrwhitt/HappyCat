@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class PlayerSkillModel
 {
     private Player player;
 
-    public Dictionary<int, ICommand> skillDictionary = new Dictionary<int, ICommand>();
+    public Dictionary<int, Skill> skillDictionary = new Dictionary<int, Skill>();
 
     private Uppercut uppercut;
 
@@ -16,14 +17,24 @@ public class PlayerSkillModel
 
         uppercut.SetSkillLevel(1);
 
-        skillDatas.Add(uppercut.attackID, 1);
+        skillDatas.Add(uppercut.skillId, 1);
 
         return skillDatas;
     }
 
     public void InitPlayerSkillLevel(Dictionary<int, int> skillDatas)
     {
-        uppercut.SetSkillLevel(skillDatas[uppercut.attackID]);
+        uppercut.SetSkillLevel(skillDatas[uppercut.skillId]);
+    }
+
+    public Skill GetPlayerSkill(int skillId)
+    {
+        return skillDictionary[skillId];
+    }
+
+    public void ChangePlayerSkillLevel(int skillId, int level)
+    {
+        skillDictionary[skillId].SetSkillLevel(level);
     }
 
     public void UseSkill(DragDropSkillItem skill)
@@ -40,6 +51,6 @@ public class PlayerSkillModel
 
         uppercut = new Uppercut(player);
 
-        skillDictionary.Add(uppercut.attackID, uppercut);
+        skillDictionary.Add(uppercut.skillId, uppercut);
     }
 }

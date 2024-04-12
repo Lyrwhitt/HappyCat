@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class UISkillInfo : MonoBehaviour
 {
     [HideInInspector] public PlayerSkillSO skillSO;
     private int skillPoint = 0;
+
+    private PlayerSkillController skillController;
 
     public Image skillIcon;
     public TextMeshProUGUI skillNameText;
@@ -24,11 +27,11 @@ public class UISkillInfo : MonoBehaviour
         pointDownBtn.onClick.AddListener(OnPointDownBtnClicked);
     }
 
-    public void SetSkillData(PlayerSkillSO playerSkillSO, int skillPoint)
+    public void SetSkillData(PlayerSkillController controller, PlayerSkillSO playerSkillSO, int skillPoint)
     {
+        this.skillController = controller;
         skillSO = playerSkillSO;
         this.skillPoint = skillPoint;
-
         SetSkillUI();
     }
 
@@ -44,11 +47,15 @@ public class UISkillInfo : MonoBehaviour
     {
         skillPoint += 1;
         skillPointText.SetText(skillPoint.ToString());
+
+        skillController.ChangeSkillLevel(skillSO.attackData.attackID, skillPoint);
     }
 
     private void OnPointDownBtnClicked()
     {
         skillPoint -= 1;
         skillPointText.SetText(skillPoint.ToString());
+
+        skillController.ChangeSkillLevel(skillSO.attackData.attackID, skillPoint);
     }
 }

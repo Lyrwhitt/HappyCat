@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class PlayerSkillController : MonoBehaviour
 {
     private DataManager<Dictionary<int, int>> skillDataManager;
-    public Dictionary<int, int> skillLevelData = new Dictionary<int, int>();
+    private Dictionary<int, int> skillLevelData = new Dictionary<int, int>();
 
     private PlayerSkillModel playerSkillModel;
     public PlayerSkillView playerSkillView;
@@ -50,6 +50,19 @@ public class PlayerSkillController : MonoBehaviour
         inputAction.Disable();
     }
 
+    private void OnApplicationQuit()
+    {
+        for(int i = 0; i < player.skillDatas.Length; i++)
+        {
+            PlayerSkillSO skillSO = player.skillDatas[i];
+
+            skillLevelData[skillSO.attackData.attackID] = 
+                playerSkillModel.GetPlayerSkill(skillSO.attackData.attackID).GetSkillLevel();
+        }
+
+        skillDataManager.SaveData(skillLevelData);
+    }
+
     public void SetSkillController(Player player)
     {
         this.player = player;
@@ -61,6 +74,16 @@ public class PlayerSkillController : MonoBehaviour
         playerActions = inputAction.Player;
 
         SetSkillLevelData();
+    }
+
+    public void ChangeSkillLevel(int skillId, int skillLevel)
+    {
+        playerSkillModel.ChangePlayerSkillLevel(skillId, skillLevel);
+    }
+
+    public Skill GetSkill(int skillId) 
+    {
+        return playerSkillModel.GetPlayerSkill(skillId);
     }
 
     private void SetSkillLevelData()

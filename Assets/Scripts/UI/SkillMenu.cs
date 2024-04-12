@@ -28,8 +28,9 @@ public class SkillMenu : MonoBehaviour
         for(int i = 0; i < player.skillDatas.Length; i++)
         {
             UISkillInfo skill = Instantiate(skillPrefab, content);
-            skill.SetSkillData(player.skillDatas[i],
-                                player.skillController.skillLevelData[player.skillDatas[i].attackData.attackID]);
+            skill.SetSkillData( player.skillController,
+                                player.skillDatas[i],
+                                player.skillController.GetSkill(player.skillDatas[i].attackData.attackID).GetSkillLevel());
         }
     }
 

@@ -4,12 +4,30 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Uppercut : ICommand
+public class Skill : ICommand
+{
+    public int skillId;
+    protected int skillLevel;
+
+    public virtual void Execute() { }
+
+    public void SetSkillLevel(int skillLevel)
+    {
+        this.skillLevel = skillLevel;
+    }
+
+    public int GetSkillLevel()
+    {
+        return skillLevel;
+    }
+}
+
+public class Uppercut : Skill
 {
     private Player player;
 
-    public int attackID;
-    private int skillLevel;
+    //public int attackID;
+    //private int skillLevel;
 
     public Uppercut(Player player)
     {
@@ -22,23 +40,18 @@ public class Uppercut : ICommand
 
             if (skillData.name == "Uppercut")
             {
-                attackID = skillData.attackData.attackID;
+                this.skillId = skillData.attackData.attackID;
 
                 break;
             }
         }
     }
 
-    public void Execute()
+    public override void Execute()
     {
         if (!player.controller.isGrounded)
             return;
 
         player.stateMachine.ChangeState(player.stateMachine.uppercutState);
-    }
-
-    public void SetSkillLevel(int skillLevel)
-    {
-        this.skillLevel = skillLevel;
     }
 }
