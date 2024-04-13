@@ -50,8 +50,45 @@ public class Uppercut : Skill
     public override void Execute()
     {
         if (!player.controller.isGrounded)
+        {
+            Debug.Log("Player is not Grounded!");
             return;
+        }
 
         player.stateMachine.ChangeState(player.stateMachine.uppercutState);
+    }
+}
+
+public class GatlingPunch : Skill
+{
+    private Player player;
+
+    public GatlingPunch(Player player)
+    {
+        this.player = player;
+        this.skillLevel = 1;
+
+        for (int i = 0; i < player.skillDatas.Length; i++)
+        {
+            PlayerSkillSO skillData = player.skillDatas[i];
+
+            if (skillData.name == "GatlingPunch")
+            {
+                this.skillId = skillData.attackData.attackID;
+
+                break;
+            }
+        }
+    }
+
+    public override void Execute()
+    {
+        if (!player.controller.isGrounded)
+        {
+            Debug.Log("Player is not Grounded!");
+            return;
+        }
+
+        player.stateMachine.ChangeState(player.stateMachine.gatlingPunchState);
     }
 }

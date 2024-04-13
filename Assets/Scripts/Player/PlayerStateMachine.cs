@@ -17,6 +17,7 @@ public class PlayerStateMachine : StateMachine
 
     [Header("Skill State")]
     public UppercutState uppercutState;
+    public GatlingPunchState gatlingPunchState;
 
     [Header("Movement")]
     public float animationBlend = 0f;
@@ -46,6 +47,7 @@ public class PlayerStateMachine : StateMachine
         dashState = new PlayerDashState(this);
 
         uppercutState = new UppercutState(this);
+        gatlingPunchState = new GatlingPunchState(this);
 
         mainCameraTransform = Camera.main.transform;
 

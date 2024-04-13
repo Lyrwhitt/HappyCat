@@ -10,14 +10,17 @@ public class PlayerSkillModel
     public Dictionary<int, Skill> skillDictionary = new Dictionary<int, Skill>();
 
     private Uppercut uppercut;
+    private GatlingPunch gatlingPunch;
 
     public Dictionary<int, int> InitPlayerSkillLevel()
     {
         Dictionary<int, int> skillDatas = new Dictionary<int, int>();
 
         uppercut.SetSkillLevel(1);
+        gatlingPunch.SetSkillLevel(1);
 
         skillDatas.Add(uppercut.skillId, 1);
+        skillDatas.Add(gatlingPunch.skillId, 1);
 
         return skillDatas;
     }
@@ -25,6 +28,7 @@ public class PlayerSkillModel
     public void InitPlayerSkillLevel(Dictionary<int, int> skillDatas)
     {
         uppercut.SetSkillLevel(skillDatas[uppercut.skillId]);
+        gatlingPunch.SetSkillLevel(skillDatas[gatlingPunch.skillId]);
     }
 
     public Skill GetPlayerSkill(int skillId)
@@ -40,8 +44,13 @@ public class PlayerSkillModel
     public void UseSkill(DragDropSkillItem skill)
     {
         if (skill == null)
+        {
+            Debug.Log("DragDropSkillItem is Null");
             return;
-        
+        }
+
+        Debug.Log("스킬 아이디 : " + skill.skillSO.attackData.attackID);
+
         skillDictionary[skill.skillSO.attackData.attackID].Execute();
     }
 
@@ -50,7 +59,9 @@ public class PlayerSkillModel
         this.player = player;
 
         uppercut = new Uppercut(player);
+        gatlingPunch = new GatlingPunch(player);
 
         skillDictionary.Add(uppercut.skillId, uppercut);
+        skillDictionary.Add(gatlingPunch.skillId, gatlingPunch);
     }
 }

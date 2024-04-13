@@ -22,6 +22,7 @@ public class PlayerAnimationData
 
     [SerializeField] private string _skillParameterName = "@Skill";
     [SerializeField] private string _uppercutParameterName = "Uppercut";
+    [SerializeField] private string _gatlingPunchParameterName = "GatlingPunch";
 
     public int groundParameterHash { get; private set; }
     public int idleParameterHash { get; private set; }
@@ -39,6 +40,7 @@ public class PlayerAnimationData
 
     public int skillParameterHash { get; private set; }
     public int uppercutParameterHash { get; private set; }
+    public int gatlingPunchParameterHash { get; private set; }
 
     public void Initialize()
     {
@@ -58,5 +60,6 @@ public class PlayerAnimationData
 
         skillParameterHash = Animator.StringToHash(_skillParameterName);
         uppercutParameterHash = Animator.StringToHash(_uppercutParameterName);
+        gatlingPunchParameterHash = Animator.StringToHash(_gatlingPunchParameterName);
     }
 }

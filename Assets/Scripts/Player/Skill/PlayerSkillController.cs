@@ -113,6 +113,7 @@ public class PlayerSkillController : MonoBehaviour
 
     private void OnBtnEStarted(InputAction.CallbackContext obj)
     {
+        Debug.Log("E ¿Œ«≤");
         playerSkillModel.UseSkill(playerSkillView.btnE.GetSkill());
     }
 
