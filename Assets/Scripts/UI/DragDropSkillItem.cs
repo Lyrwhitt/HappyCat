@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DragDropSkillItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
@@ -9,12 +10,20 @@ public class DragDropSkillItem : MonoBehaviour, IPointerDownHandler, IBeginDragH
 
     private RectTransform rectTransform;
     [HideInInspector] public CanvasGroup canvasGroup;
+    private Image skillIcon;
 
     private DragDropSkillItem dragDropItem;
 
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        skillIcon = GetComponent<Image>();
+    }
+
+    public void SetSkill(PlayerSkillSO skillData)
+    {
+        skillSO = skillData;
+        skillIcon.sprite = skillData.attackData.attackImg;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -25,7 +34,7 @@ public class DragDropSkillItem : MonoBehaviour, IPointerDownHandler, IBeginDragH
     {
         dragDropItem = Instantiate(Resources.Load<DragDropSkillItem>("UI/SkillItem"), UIManager.Instance.canvas.transform);
         rectTransform = dragDropItem.GetComponent<RectTransform>();
-        dragDropItem.skillSO = skillSO;
+        dragDropItem.SetSkill(skillSO);
 
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
@@ -55,9 +64,18 @@ public class DragDropSkillItem : MonoBehaviour, IPointerDownHandler, IBeginDragH
             dragDropItem.canvasGroup.blocksRaycasts = true;
             rectTransform.position = eventData.pointerEnter.transform.position;
         }
+        else if(eventData.pointerEnter != null && eventData.pointerEnter.tag == "SkillItem")
+        {
+            DragDropSkillItem dragDropSkillItem = eventData.pointerEnter.GetComponent<DragDropSkillItem>();
+
+            dragDropSkillItem.SetSkill(skillSO);
+
+            Destroy(dragDropItem.gameObject);
+        }
         else
         {
             Destroy(dragDropItem.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

@@ -9,6 +9,6 @@ public class AnimationEventReceiver : MonoBehaviour
 
     public void OnCalledEvent()
     {
-        animationEvent.Invoke();
+        animationEvent?.Invoke();
     }
 }

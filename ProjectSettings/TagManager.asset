@@ -9,6 +9,7 @@ TagManager:
   - Door
   - Canvas
   - ShortcutSlot
+  - SkillItem
   layers:
   - Default
   - TransparentFX

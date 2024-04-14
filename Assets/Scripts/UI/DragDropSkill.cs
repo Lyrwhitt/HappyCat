@@ -29,7 +29,7 @@ public class DragDropSkill : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
     {
         dragDropItem = Instantiate(Resources.Load<DragDropSkillItem>("UI/SkillItem"), UIManager.Instance.canvas.transform);
         rectTransform = dragDropItem.GetComponent<RectTransform>();
-        dragDropItem.skillSO = skillInfo.skillSO;
+        dragDropItem.SetSkill(skillInfo.skillSO);
 
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
@@ -59,6 +59,14 @@ public class DragDropSkill : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
 
             dragDropItem.canvasGroup.blocksRaycasts = true;
             rectTransform.position = eventData.pointerEnter.transform.position;
+        }
+        else if (eventData.pointerEnter != null && eventData.pointerEnter.tag == "SkillItem")
+        {
+            DragDropSkillItem dragDropSkillItem = eventData.pointerEnter.GetComponent<DragDropSkillItem>();
+
+            dragDropSkillItem.SetSkill(skillInfo.skillSO);
+
+            Destroy(dragDropItem.gameObject);
         }
         else
         {
