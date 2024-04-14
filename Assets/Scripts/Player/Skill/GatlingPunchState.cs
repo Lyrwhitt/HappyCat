@@ -5,8 +5,15 @@ using UnityEngine;
 
 public class GatlingPunchState : PlayerSkillState
 {
+    private float waitTime;
+    private float punchTime;
+    private bool isPunching;
+
+    public float speedIncreaseRate = 0.1f; // 애니메이션 재생 속도 증가율
+    public float maxSpeed = 1.5f; // 최대 애니메이션 재생 속도
+    private float currentSpeed = 1.1f; // 현재 애니메이션 재생 속도
+
     private bool alreadyApplyForce;
-    private bool alreadyApplyCombo;
 
     private PlayerAttackData attackData;
     private AttackInfoData attackInfoData;
@@ -16,39 +23,38 @@ public class GatlingPunchState : PlayerSkillState
     public GatlingPunchState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
     {
         attackData = Resources.Load<PlayerSkillSO>("Skills/GatlingPunch").attackData;
-        //attackInfoData = attackData.AttackInfoDatas[0];
         skill = stateMachine.player.skillController.GetSkill(attackData.attackID);
     }
 
     public override void EnterState()
     {
-        Debug.Log("뭐가문제지ㅅㅂ");
-
         base.EnterState();
+
+        attackInfoData = attackData.AttackInfoDatas[0];
+
+        waitTime = 1f;
+        punchTime = 5f;
+        isPunching = false;
+
+        currentSpeed = 1.1f;
 
         stateMachine.player.animationEventReceiver.animationEvent += DamageEnemy;
 
         SetAnimationBool(stateMachine.player.animationData.gatlingPunchParameterHash, true);
+        stateMachine.player.animator.SetInteger("GatlingPunchCombo", 0);
 
         alreadyApplyForce = false;
-        alreadyApplyCombo = false;
-
-        int comboIndex = stateMachine.comboIndex;
-
-        attackInfoData = attackData.GetAttackInfo(comboIndex);
-        //stateMachine.player.animator.SetInteger("GatlingPunchCombo", comboIndex);
     }
 
     public override void ExitState()
     {
         base.ExitState();
 
+        InitPunchSpeed();
+
         stateMachine.player.animationEventReceiver.animationEvent -= DamageEnemy;
 
         SetAnimationBool(stateMachine.player.animationData.gatlingPunchParameterHash, false);
-
-        if (!alreadyApplyCombo)
-            stateMachine.comboIndex = 0;
     }
 
     public void DamageEnemy()
@@ -77,21 +83,11 @@ public class GatlingPunchState : PlayerSkillState
                 if (collider.transform.TryGetComponent(out ForceReceiver forceReceiver))
                 {
                     //rigidbody.velocity = Vector3.zero;
-                    forceReceiver.AddForce(stateMachine.player.transform.forward * 3f + collider.transform.up * 12f);
+                    //forceReceiver.AddForce(stateMachine.player.transform.forward * 3f + collider.transform.up * 12f);
                 }
             }
         }
     }
-    private void TryComboAttack()
-    {
-        if (alreadyApplyCombo) return;
-        // 마지막 공격까지 했을 때
-        if (attackInfoData.comboStateIndex == -1) return;
-        if (!stateMachine.isAttacking) return;
-
-        alreadyApplyCombo = true;
-    }
-
 
     private void TryApplyForce()
     {
@@ -106,39 +102,54 @@ public class GatlingPunchState : PlayerSkillState
         stateMachine.player.forceReceiver.drag = attackInfoData.drag;
     }
 
+    private void PunchSpeedUp()
+    {
+        // 최대 속도 이하일 때만 속도를 증가시킴
+        if (currentSpeed < maxSpeed)
+        {
+            // 점진적으로 속도를 증가시킴
+            currentSpeed += speedIncreaseRate * Time.deltaTime;
+            currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed); // 최대 속도 제한
+
+            // 애니메이션 재생 속도 설정
+            stateMachine.player.animator.SetFloat("GatlingPunchSpeed", currentSpeed);
+        }
+    }
+
+    private void InitPunchSpeed()
+    {
+        stateMachine.player.animator.SetFloat("GatlingPunchSpeed", 1f);
+    }
+
     public override void UpdateState()
     {
-        //base.UpdateState();
-
-        /*
         ForceMove();
 
-        float normalizedTime = GetNormalizedTime(stateMachine.player.animator, "GatlingPunch");
-
-        if (normalizedTime < 1f)
+        if (!isPunching)
         {
-            // 지정한 트랜지션 타임이 지난 후 힘, 콤보 적용
-            if (normalizedTime >= attackInfoData.forceTransitionTime)
-                TryApplyForce();
+            waitTime -= Time.deltaTime;
 
-            if (normalizedTime >= attackInfoData.comboTransitionTime)
+            if (Input.GetMouseButtonDown(0))
             {
-                TryComboAttack();
+                isPunching = true;
+                stateMachine.player.animator.SetInteger("GatlingPunchCombo", 1);
+            }
 
-                if (alreadyApplyCombo)
-                {
-                    // 콤보가 증가하는 곳 (AttackData의 각 공격은 다음 공격의 인덱스를 가지고있다)
-                    stateMachine.comboIndex = attackInfoData.comboStateIndex;
-                    stateMachine.ChangeState(stateMachine.gatlingPunchState);
-                }
+            if (waitTime <= 0f)
+            {
+                stateMachine.ChangeState(stateMachine.idleState);
             }
         }
-        // 모션 다보고 진행
         else
         {
-            stateMachine.ChangeState(stateMachine.idleState);
-        }
+            punchTime -= Time.deltaTime;
 
-        */
+            PunchSpeedUp();
+
+            if (Input.GetMouseButtonUp(0) || (punchTime <= 0f))
+            {
+                stateMachine.ChangeState(stateMachine.idleState);
+            }
+        }
     }
 }

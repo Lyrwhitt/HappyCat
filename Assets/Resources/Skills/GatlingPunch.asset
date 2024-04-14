@@ -20,16 +20,16 @@ MonoBehaviour:
     cooldown: 10
     AttackInfoDatas:
     - comboStateIndex: 1
-      comboTransitionTime: 0.4
+      comboTransitionTime: 0
       forceTransitionTime: 0
-      force: -10
+      force: 0
       drag: 0.3
       hitBox: {x: 0, y: 0, z: 0}
       hitBoxCenterOffset: {x: 0, y: 0.9, z: 0}
       isCancelable: 1
       damage: 0
     - comboStateIndex: -1
-      comboTransitionTime: 0.4
+      comboTransitionTime: 0
       forceTransitionTime: 0
       force: 16
       drag: 0.19
