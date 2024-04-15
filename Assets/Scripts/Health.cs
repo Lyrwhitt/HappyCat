@@ -23,11 +23,9 @@ public class Health : MonoBehaviour
         onHealthChange?.Invoke();
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         health = Mathf.Max(health - damage, 0);
-
-        Debug.Log(health);
 
         onHealthChange?.Invoke();
 
