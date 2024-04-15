@@ -39,7 +39,7 @@ public class PlayerGroundState : PlayerBaseState
     {
         base.FixedUpdateState();
 
-        if (!stateMachine.player.controller.isGrounded
+        if (!stateMachine.player.groundDetection.isGrounded
         && stateMachine.player.controller.velocity.y < stateMachine.player.forceReceiver.gravity * Time.fixedDeltaTime)
         {
             stateMachine.ChangeState(stateMachine.fallState);

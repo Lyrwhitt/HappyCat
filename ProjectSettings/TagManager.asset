@@ -10,6 +10,7 @@ TagManager:
   - Canvas
   - ShortcutSlot
   - SkillItem
+  - Map
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Effect
   - Water
   - UI
-  - 
-  - 
+  - Ground
+  - Player
   - 
   - 
   - 

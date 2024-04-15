@@ -26,7 +26,7 @@ public class PlayerFallState : PlayerAirState
     {
         base.UpdateState();
 
-        if (stateMachine.player.controller.isGrounded)
+        if (stateMachine.player.groundDetection.isGrounded)
         {
             stateMachine.ChangeState(stateMachine.idleState);
             return;

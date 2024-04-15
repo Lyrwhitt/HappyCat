@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     public Camera playerCamera;
     [HideInInspector]
     public CinemachineBrain playerCameraBrain;
+    [HideInInspector]
+    public GroundDetection groundDetection;
 
     public Test testGizmo;
 
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
         forceReceiver = GetComponent<ForceReceiver>();
         skillController = GetComponent<PlayerSkillController>();
+        groundDetection = GetComponent<GroundDetection>();
 
         skillController.SetSkillController(this);
 
