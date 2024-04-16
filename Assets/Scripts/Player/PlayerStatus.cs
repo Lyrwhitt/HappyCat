@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerStatus : Health
 {
 
-    private void Start()
+    protected override void Start()
     {
         AddEvent();
     }

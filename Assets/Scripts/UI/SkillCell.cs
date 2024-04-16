@@ -6,12 +6,6 @@ using UnityEngine.UI;
 public class SkillCell : MonoBehaviour
 {
     [HideInInspector] public DragDropSkillItem skill;
-    private Transform cellImgTransform;
-
-    private void Start()
-    {
-        cellImgTransform = this.transform.GetChild(0);
-    }
 
     public DragDropSkillItem GetSkill()
     {
@@ -21,7 +15,8 @@ public class SkillCell : MonoBehaviour
     public void SetSkill(DragDropSkillItem skillItem)
     {
         skill = skillItem;
-        skill.transform.SetParent(cellImgTransform);
+        skillItem.canvasGroup.blocksRaycasts = true;
+        skill.transform.SetParent(transform.GetChild(0), false);
     }
 
     public void RemoveSkill()

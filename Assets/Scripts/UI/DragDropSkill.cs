@@ -57,7 +57,6 @@ public class DragDropSkill : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
 
             skillCell.SetSkill(dragDropItem);
 
-            dragDropItem.canvasGroup.blocksRaycasts = true;
             rectTransform.position = eventData.pointerEnter.transform.position;
         }
         else if (eventData.pointerEnter != null && eventData.pointerEnter.tag == "SkillItem")

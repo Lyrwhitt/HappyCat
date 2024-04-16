@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,10 @@ using UnityEngine.InputSystem;
 public class PlayerSkillController : MonoBehaviour
 {
     private DataManager<Dictionary<int, int>> skillDataManager;
-    private Dictionary<int, int> skillLevelData = new Dictionary<int, int>();
+    private Dictionary<int, int> skillLevelData;
+
+    private DataManager<Dictionary<int, string>> shortcutDataManager;
+    private Dictionary<int, string> shortcutData;
 
     private PlayerSkillModel playerSkillModel;
     public PlayerSkillView playerSkillView;
@@ -52,15 +56,36 @@ public class PlayerSkillController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        for(int i = 0; i < player.skillDatas.Length; i++)
+        SaveSkillLevelData();
+        SaveShortcutData();
+    }
+
+    private void SaveSkillLevelData()
+    {
+        for (int i = 0; i < player.skillDatas.Length; i++)
         {
             PlayerSkillSO skillSO = player.skillDatas[i];
 
-            skillLevelData[skillSO.attackData.attackID] = 
+            skillLevelData[skillSO.attackData.attackID] =
                 playerSkillModel.GetPlayerSkill(skillSO.attackData.attackID).GetSkillLevel();
         }
 
         skillDataManager.SaveData(skillLevelData);
+    }
+
+    private void SaveShortcutData()
+    {
+        for(int i = 0; i < playerSkillView.skillCells.Count; i++)
+        {
+            DragDropSkillItem skill = playerSkillView.skillCells[i].GetSkill();
+
+            if (skill != null) 
+            {
+                shortcutData[i] = skill.skillSO.name;
+            }
+        }
+
+        shortcutDataManager.SaveData(shortcutData);
     }
 
     public void SetSkillController(Player player)
@@ -70,10 +95,15 @@ public class PlayerSkillController : MonoBehaviour
         skillDataManager = new DataManager<Dictionary<int, int>>(Path.Combine(Application.persistentDataPath, "SkillLevelData.json"));
         playerSkillModel = new PlayerSkillModel(player);
 
+        shortcutDataManager = new DataManager<Dictionary<int, string>>(Path.Combine(Application.persistentDataPath, "ShortcutData.json"));
+
+
+
         inputAction = new PlayerInputAction();
         playerActions = inputAction.Player;
 
         SetSkillLevelData();
+        SetShortcutData();
     }
 
     public void ChangeSkillLevel(int skillId, int skillLevel)
@@ -90,10 +120,34 @@ public class PlayerSkillController : MonoBehaviour
     {
         skillLevelData = skillDataManager.LoadData();
 
-        if (skillLevelData == null)
-            skillLevelData = playerSkillModel.InitPlayerSkillLevel();
-        else
+        if(skillLevelData != null)
+        {
             playerSkillModel.InitPlayerSkillLevel(skillLevelData);
+        }
+        else
+        {
+            skillLevelData = playerSkillModel.InitPlayerSkillLevel();
+        }
+    }
+
+    private void SetShortcutData()
+    {
+        shortcutData = shortcutDataManager.LoadData();
+
+        if(shortcutData != null)
+        {
+            foreach(KeyValuePair<int, string> data in shortcutData)
+            {
+                DragDropSkillItem skill = Instantiate(Resources.Load<DragDropSkillItem>("UI/SkillItem"));
+                skill.SetSkill(Resources.Load<PlayerSkillSO>(string.Concat("Skills/", data.Value)));
+                playerSkillView.skillCells[data.Key].SetSkill(skill);
+            }
+        }
+        else
+        {
+            shortcutData = new Dictionary<int, string>();
+        }
+            
     }
 
     private void AddInputActionsCallbacks()
@@ -113,7 +167,6 @@ public class PlayerSkillController : MonoBehaviour
 
     private void OnBtnEStarted(InputAction.CallbackContext obj)
     {
-        Debug.Log("E ¿Œ«≤");
         playerSkillModel.UseSkill(playerSkillView.btnE.GetSkill());
     }
 
