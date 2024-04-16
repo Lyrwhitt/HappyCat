@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
     public event Action onDie;
     public event Action onHealthChange;
 
-    private void Start()
+    protected virtual void Start()
     {
         health = statusData.hp;
     }

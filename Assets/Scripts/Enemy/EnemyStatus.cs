@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class EnemyStatus : Health
 {
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         AddEvent();
     }
 

@@ -9,8 +9,8 @@ public class GatlingPunchState : PlayerSkillState
     private float punchTime;
     private bool isPunching;
 
-    public float speedIncreaseRate = 0.1f; // 애니메이션 재생 속도 증가율
-    public float maxSpeed = 1.5f; // 최대 애니메이션 재생 속도
+    public float speedIncreaseRate = 0.2f; // 애니메이션 재생 속도 증가율
+    public float maxSpeed = 1.8f; // 최대 애니메이션 재생 속도
     private float currentSpeed = 1.1f; // 현재 애니메이션 재생 속도
 
     private bool alreadyApplyForce;
