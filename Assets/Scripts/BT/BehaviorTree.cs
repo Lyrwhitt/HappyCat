@@ -10,16 +10,6 @@ public enum NodeState
 
 public abstract class BTNode
 {
-    protected NodeState state;
-
-    public NodeState State
-    {
-        get
-        {
-            return state;
-        }
-    }
-
     public abstract NodeState Evaluate();
 }
 
@@ -78,5 +68,30 @@ public class SequenceNode : BTNode
             }
         }
         return NodeState.Success;
+    }
+}
+
+public class SelectorNode : BTNode
+{
+    private List<BTNode> children = new List<BTNode>();
+
+    public void AddChild(BTNode node)
+    {
+        children.Add(node);
+    }
+
+    public override NodeState Evaluate()
+    {
+        foreach (var child in children)
+        {
+            switch (child.Evaluate())
+            {
+                case NodeState.Success:
+                    return NodeState.Success;
+                case NodeState.Running:
+                    return NodeState.Running;
+            }
+        }
+        return NodeState.Failure;
     }
 }
