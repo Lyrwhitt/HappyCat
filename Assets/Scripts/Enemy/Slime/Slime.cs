@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Slime : MonoBehaviour
 {
+    [field: Header("Animation")]
+    [field: SerializeField] public SlimeAnimationData animationData;
+
     [HideInInspector]
     public Animator animator;
 
@@ -12,7 +15,9 @@ public class Slime : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animationData.Initialize();
+
+        animator = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
     }
 
