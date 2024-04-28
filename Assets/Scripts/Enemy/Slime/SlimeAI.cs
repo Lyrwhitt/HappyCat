@@ -10,6 +10,8 @@ public class SlimeAI : MonoBehaviour
     private Transform player;
     private BTNode root;
 
+    public float waitTime = 0f;
+
     private float lastAttackTime;
     private float attackCooldown = 2f;
 
@@ -18,7 +20,7 @@ public class SlimeAI : MonoBehaviour
     public float moveSpeed = 2f;
 
     private Vector3 roamDestination; // 돌아다닐 방향
-    private float roamRange = 10f; // 돌아다닐 범위
+    private float roamRange = 3f; // 돌아다닐 범위
     private bool roaming = false; // Roam 중인지 여부를 나타내는 플래그
 
     private void Start()
@@ -71,12 +73,21 @@ public class SlimeAI : MonoBehaviour
     {
         slime.animator.SetFloat(slime.animationData.speedParameterHash, 0f);
 
-        return NodeState.Success;
+        waitTime -= Time.deltaTime;
+
+        if(waitTime <= 0f)
+        {
+            return NodeState.Success;
+        }
+        else
+        {
+            return NodeState.Running;
+        }
     }
 
     private bool CheckWaitTime()
     {
-        if((Time.time - lastAttackTime) < attackCooldown)
+        if(waitTime > 0f)
         {
             return true;
         }
@@ -103,8 +114,17 @@ public class SlimeAI : MonoBehaviour
 
     private NodeState Roam()
     {
-        if (!roaming || (roaming && Vector3.Distance(transform.position, roamDestination) < 0.1f))
+        if(roaming && Vector3.Distance(transform.position, roamDestination) < 0.1f)
         {
+            waitTime = Random.Range(1f, 3f);
+            roaming = false;
+
+            return NodeState.Success;
+        }
+
+        if (!roaming)
+        {
+            slime.animator.SetFloat(slime.animationData.speedParameterHash, 1f);
             roamDestination = GetRandomRoamDestination();
             roaming = true;
         }
