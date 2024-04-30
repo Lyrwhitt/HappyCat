@@ -13,16 +13,20 @@ public class Slime : MonoBehaviour
     [HideInInspector]
     public CharacterController controller;
 
+    [HideInInspector]
+    public ForceReceiver forceReceiver;
+
     private void Awake()
     {
         animationData.Initialize();
 
         animator = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
+        forceReceiver = GetComponent<ForceReceiver>();
     }
 
-    private void Start()
+    private void Update()
     {
-        
+        controller.Move(forceReceiver.Movement * Time.deltaTime);
     }
 }

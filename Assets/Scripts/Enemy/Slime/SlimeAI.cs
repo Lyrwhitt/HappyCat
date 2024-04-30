@@ -31,6 +31,12 @@ public class SlimeAI : MonoBehaviour
 
         SelectorNode selector = new SelectorNode();
 
+        SequenceNode damageSequence = new SequenceNode();
+        ConditionNode damageCondition = new ConditionNode(DamageCondition);
+        ActionNode damageAction = new ActionNode(DamageAction);
+        damageSequence.AddChild(damageCondition);
+        damageSequence.AddChild(damageAction);
+
         SequenceNode waitSequence = new SequenceNode();
         ConditionNode checkWaitTime = new ConditionNode(CheckWaitTime);
         ActionNode waitForNextAction = new ActionNode(WaitForNextAction);
@@ -55,6 +61,7 @@ public class SlimeAI : MonoBehaviour
         roamSequence.AddChild(roamCondition);
         roamSequence.AddChild(roamAction);
 
+        selector.AddChild(damageSequence);
         selector.AddChild(waitSequence);
         selector.AddChild(attackSequence);
         selector.AddChild(detectSequence);
@@ -68,7 +75,26 @@ public class SlimeAI : MonoBehaviour
         root.Evaluate();
     }
 
-    #region WaitSequence
+    #region Damage Sequence
+    private bool DamageCondition()
+    {
+        if (slime.forceReceiver.isStagger)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private NodeState DamageAction()
+    {
+        return NodeState.Success;
+    }
+    #endregion
+
+    #region Wait Sequence
     private NodeState WaitForNextAction()
     {
         slime.animator.SetFloat(slime.animationData.speedParameterHash, 0f);
@@ -175,6 +201,8 @@ public class SlimeAI : MonoBehaviour
             lastAttackTime = Time.time; // 마지막 공격 시간 업데이트
 
             this.transform.LookAt(player);
+            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
+
             slime.animator.SetTrigger(slime.animationData.attackParameterHash);
 
             return NodeState.Success; // 공격 성공

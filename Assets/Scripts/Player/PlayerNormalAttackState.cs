@@ -67,10 +67,16 @@ public class PlayerNormalAttackState : PlayerAttackState
                     health.TakeDamage(attackInfoData.damage);
                 }
 
-                if(collider.transform.TryGetComponent(out Rigidbody rigidbody))
+                if(collider.transform.TryGetComponent(out ForceReceiver forceReceiver))
                 {
-                    rigidbody.velocity = Vector3.zero;
-                    rigidbody.AddForce(stateMachine.player.transform.forward * 20f + collider.transform.up * 150f);
+                    //rigidbody.velocity = Vector3.zero;
+                    //rigidbody.AddForce(stateMachine.player.transform.forward * 20f + collider.transform.up * 150f);
+                    forceReceiver.AddForceWithStagger(stateMachine.player.transform.forward, 0.2f);
+                }
+
+                if(collider.transform.TryGetComponent(out Animator animator))
+                {
+                    animator.SetTrigger("Damage");
                 }
             }
         }
