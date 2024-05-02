@@ -78,7 +78,7 @@ public class SlimeAI : MonoBehaviour
     #region Damage Sequence
     private bool DamageCondition()
     {
-        if (slime.forceReceiver.isStagger)
+        if (slime.damageReceiver.isStagger || slime.damageReceiver.isAirborne)
         {
             return true;
         }

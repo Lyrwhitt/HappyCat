@@ -61,22 +61,22 @@ public class PlayerNormalAttackState : PlayerAttackState
         {
             if (collider.CompareTag("Enemy"))
             {
-                if (collider.transform.TryGetComponent(out Health health))
+                if(collider.transform.TryGetComponent(out DamageReceiver damageReceiver))
                 {
+                    Vector3 force;
                     EffectManager.Instance.PlayEffect("PunchEffect", boxCenter);
-                    health.TakeDamage(attackInfoData.damage);
-                }
 
-                if(collider.transform.TryGetComponent(out ForceReceiver forceReceiver))
-                {
-                    //rigidbody.velocity = Vector3.zero;
-                    //rigidbody.AddForce(stateMachine.player.transform.forward * 20f + collider.transform.up * 150f);
-                    forceReceiver.AddForceWithStagger(stateMachine.player.transform.forward, 0.2f);
-                }
-
-                if(collider.transform.TryGetComponent(out Animator animator))
-                {
-                    animator.SetTrigger("Damage");
+                    if (!damageReceiver.isAirborne)
+                    {
+                        force = stateMachine.player.transform.forward;
+                        damageReceiver.Damage(attackInfoData.damage, force);
+                        damageReceiver.Stagger(0.5f);
+                    }
+                    else
+                    {
+                        force = stateMachine.player.transform.forward * 3f + collider.transform.up * 12f;
+                        damageReceiver.Damage(attackInfoData.damage, force);
+                    }
                 }
             }
         }

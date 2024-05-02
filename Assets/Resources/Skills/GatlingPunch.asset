@@ -24,7 +24,7 @@ MonoBehaviour:
       forceTransitionTime: 0
       force: 0
       drag: 0.3
-      hitBox: {x: 0.6, y: 1, z: 0.85}
+      hitBox: {x: 0.6, y: 1, z: 1.4}
       hitBoxCenterOffset: {x: 0, y: 0.9, z: 0}
       isCancelable: 1
       damage: 5

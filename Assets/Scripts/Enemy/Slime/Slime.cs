@@ -14,6 +14,9 @@ public class Slime : MonoBehaviour
     public CharacterController controller;
 
     [HideInInspector]
+    public DamageReceiver damageReceiver;
+
+    [HideInInspector]
     public ForceReceiver forceReceiver;
 
     private void Awake()
@@ -22,6 +25,7 @@ public class Slime : MonoBehaviour
 
         animator = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
+        damageReceiver = GetComponent<DamageReceiver>();
         forceReceiver = GetComponent<ForceReceiver>();
     }
 

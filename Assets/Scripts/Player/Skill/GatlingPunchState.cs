@@ -74,16 +74,22 @@ public class GatlingPunchState : PlayerSkillState
         {
             if (collider.CompareTag("Enemy"))
             {
-                if (collider.transform.TryGetComponent(out Health health))
+                if (collider.transform.TryGetComponent(out DamageReceiver damageReceiver))
                 {
+                    Vector3 force;
                     EffectManager.Instance.PlayEffect("PunchEffect", boxCenter);
-                    health.TakeDamage(attackInfoData.damage * skill.GetSkillLevel());
-                }
 
-                if (collider.transform.TryGetComponent(out ForceReceiver forceReceiver))
-                {
-                    //rigidbody.velocity = Vector3.zero;
-                    //forceReceiver.AddForce(stateMachine.player.transform.forward * 3f + collider.transform.up * 12f);
+                    if (!damageReceiver.isAirborne)
+                    {
+                        force = Vector3.zero;
+                        damageReceiver.Damage(attackInfoData.damage * skill.GetSkillLevel(), force);
+                        damageReceiver.Stagger(0.2f);
+                    }
+                    else
+                    {
+                        force = stateMachine.player.transform.forward * 3f + collider.transform.up * 12f;
+                        damageReceiver.Damage(attackInfoData.damage * skill.GetSkillLevel(), force);
+                    }
                 }
             }
         }
