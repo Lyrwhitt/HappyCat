@@ -50,4 +50,10 @@ public class ForceReceiver : MonoBehaviour
     {
         verticalVelocity += jumpForce;
     }
+
+    public void ChangeDragAndGravity(float drag, float gravity)
+    {
+        this.drag = drag;
+        this.gravity = gravity;
+    }
 }

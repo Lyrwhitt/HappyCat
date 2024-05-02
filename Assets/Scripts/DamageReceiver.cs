@@ -19,19 +19,24 @@ public class DamageReceiver : MonoBehaviour
     public bool isStagger => staggerTime > 0f;
     public bool isAirborne = false;
 
+    private float dragOrigin;
+    private float gravityOrigin;
+
     private void Awake()
     {
         health = GetComponent<Health>();
         forceReceiver = GetComponent<ForceReceiver>();
         animator = GetComponentInChildren<Animator>();
         groundDetection = GetComponent<GroundDetection>();
+
+        dragOrigin = forceReceiver.drag;
+        gravityOrigin = forceReceiver.gravity;
     }
 
     private void Update()
     {
         if (isStagger)
         {
-            Debug.Log("stagger");
             staggerTime -= Time.deltaTime;
         }
     }
@@ -48,12 +53,12 @@ public class DamageReceiver : MonoBehaviour
         staggerTime = time;
     }
 
-    public void Airborne()
+    public void Airborne(float drag, float gravity)
     {
-        StartCoroutine(AirborneCorountine());
+        StartCoroutine(AirborneCorountine(drag, gravity));
     }
 
-    private IEnumerator AirborneCorountine()
+    private IEnumerator AirborneCorountine(float drag, float gravity)
     {
         if (isAirborne)
             yield break;
@@ -63,11 +68,21 @@ public class DamageReceiver : MonoBehaviour
         WaitUntil waitUntil = new WaitUntil(() => !groundDetection.isGrounded);
 
         yield return waitUntil;
+
+
+        Debug.Log("airborne");
+
         isAirborne = true;
+        forceReceiver.ChangeDragAndGravity(drag, gravity);
 
         waitUntil = new WaitUntil(() => groundDetection.isGrounded);
 
         yield return waitUntil;
+
+
+        Debug.Log("airborneEnd");
+
         isAirborne = false;
+        forceReceiver.ChangeDragAndGravity(dragOrigin, gravityOrigin);
     }
 }
