@@ -101,7 +101,11 @@ public class PlayerBaseState : IState
     }
     protected virtual void OnDashStarted(InputAction.CallbackContext context)
     {
+        if (!stateMachine.player.groundDetection.isGrounded)
+            return;
 
+        if (CooldownManager.Instance.SkillUsable("Dash", 2.0f))
+            stateMachine.ChangeState(stateMachine.dashState);
     }
 
     // 인풋 안받는 무브

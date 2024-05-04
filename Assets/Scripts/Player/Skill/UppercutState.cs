@@ -63,7 +63,7 @@ public class UppercutState : PlayerSkillState
 
                     if (!damageReceiver.isAirborne)
                     {
-                        force = stateMachine.player.transform.forward * 3f + collider.transform.up * 12f;
+                        force = stateMachine.player.transform.forward * 5f + collider.transform.up * 15f;
                         damageReceiver.Damage(attackInfoData.damage * skill.GetSkillLevel(), force);
                         damageReceiver.Airborne(0.3f, -4.8f);
                     }

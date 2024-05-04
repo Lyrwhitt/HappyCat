@@ -87,12 +87,6 @@ public class PlayerGroundState : PlayerBaseState
         base.OnMovementCanceled(context);
     }
 
-    protected override void OnDashStarted(InputAction.CallbackContext context)
-    {
-        if (CooldownManager.Instance.SkillUsable("Dash", 2.0f))
-            stateMachine.ChangeState(stateMachine.dashState);
-    }
-
     protected virtual void OnMove()
     {
         stateMachine.ChangeState(stateMachine.runState);

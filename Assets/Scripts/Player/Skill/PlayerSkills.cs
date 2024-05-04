@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class Skill : ICommand
 {
+    protected Player player;
+    protected PlayerSkillSO skillData;
+
     public int skillId;
     protected int skillLevel;
 
@@ -24,8 +27,6 @@ public class Skill : ICommand
 
 public class Uppercut : Skill
 {
-    private Player player;
-
     //public int attackID;
     //private int skillLevel;
 
@@ -36,7 +37,7 @@ public class Uppercut : Skill
 
         for (int i = 0; i < player.skillDatas.Length; i++)
         {
-            PlayerSkillSO skillData = player.skillDatas[i];
+            skillData = player.skillDatas[i];
 
             if (skillData.name == "Uppercut")
             {
@@ -55,14 +56,13 @@ public class Uppercut : Skill
             return;
         }
 
-        player.stateMachine.ChangeState(player.stateMachine.uppercutState);
+        if (CooldownManager.Instance.SkillUsable("Uppercut", skillData.attackData.cooldown))
+            player.stateMachine.ChangeState(player.stateMachine.uppercutState);
     }
 }
 
 public class GatlingPunch : Skill
 {
-    private Player player;
-
     public GatlingPunch(Player player)
     {
         this.player = player;
@@ -70,7 +70,7 @@ public class GatlingPunch : Skill
 
         for (int i = 0; i < player.skillDatas.Length; i++)
         {
-            PlayerSkillSO skillData = player.skillDatas[i];
+            skillData = player.skillDatas[i];
 
             if (skillData.name == "GatlingPunch")
             {
@@ -89,6 +89,7 @@ public class GatlingPunch : Skill
             return;
         }
 
-        player.stateMachine.ChangeState(player.stateMachine.gatlingPunchState);
+        if (CooldownManager.Instance.SkillUsable("GatlingPunch", skillData.attackData.cooldown))
+            player.stateMachine.ChangeState(player.stateMachine.gatlingPunchState);
     }
 }

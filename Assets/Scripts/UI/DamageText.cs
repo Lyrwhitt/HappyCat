@@ -28,7 +28,7 @@ public class DamageText : MonoBehaviour
         Vector3 spawnPosition = position + randomPosition;
 
         damageText.rectTransform.position = Camera.main.WorldToScreenPoint(spawnPosition);
-        damageText.text = Mathf.FloorToInt(damage).ToString();
+        damageText.SetText(Mathf.FloorToInt(damage).ToString());
 
         StartCoroutine(FadeOutDamageText());
     }

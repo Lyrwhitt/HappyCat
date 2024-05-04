@@ -162,30 +162,84 @@ public class PlayerSkillController : MonoBehaviour
 
     private void OnBtnQStarted(InputAction.CallbackContext obj)
     {
-        playerSkillModel.UseSkill(playerSkillView.btnQ.GetSkill());
+        if (playerSkillView.btnQ.skillUsable)
+        {
+            DragDropSkillItem skill = playerSkillView.btnQ.GetSkill();
+
+            if(skill != null)
+            {
+                playerSkillModel.UseSkill(skill);
+                playerSkillView.btnQ.SetCooldown(skill.skillSO.attackData.cooldown);
+            }
+        }
     }
 
     private void OnBtnEStarted(InputAction.CallbackContext obj)
     {
-        playerSkillModel.UseSkill(playerSkillView.btnE.GetSkill());
+        if (playerSkillView.btnE.skillUsable)
+        {
+            DragDropSkillItem skill = playerSkillView.btnE.GetSkill();
+
+            if (skill != null)
+            {
+                playerSkillModel.UseSkill(skill);
+                playerSkillView.btnE.SetCooldown(skill.skillSO.attackData.cooldown);
+            }
+        }
     }
 
     private void OnBtnRStarted(InputAction.CallbackContext obj)
     {
-        playerSkillModel.UseSkill(playerSkillView.btnR.GetSkill());
+        if (playerSkillView.btnR.skillUsable)
+        {
+            DragDropSkillItem skill = playerSkillView.btnR.GetSkill();
+
+            if (skill != null)
+            {
+                playerSkillModel.UseSkill(skill);
+                playerSkillView.btnR.SetCooldown(skill.skillSO.attackData.cooldown);
+            }
+        }
     }
 
     private void OnBtnTStarted(InputAction.CallbackContext obj)
     {
-        playerSkillModel.UseSkill(playerSkillView.btnT.GetSkill());
+        if (playerSkillView.btnT.skillUsable)
+        {
+            DragDropSkillItem skill = playerSkillView.btnT.GetSkill();
+
+            if (skill != null)
+            {
+                playerSkillModel.UseSkill(skill);
+                playerSkillView.btnT.SetCooldown(skill.skillSO.attackData.cooldown);
+            }
+        }
     }
 
     private void OnBtnFStarted(InputAction.CallbackContext obj)
     {
-        playerSkillModel.UseSkill(playerSkillView.btnF.GetSkill());
+        if (playerSkillView.btnF.skillUsable)
+        {
+            DragDropSkillItem skill = playerSkillView.btnF.GetSkill();
+
+            if (skill != null)
+            {
+                playerSkillModel.UseSkill(skill);
+                playerSkillView.btnF.SetCooldown(skill.skillSO.attackData.cooldown);
+            }
+        }
     }
     private void OnBtnGStarted(InputAction.CallbackContext obj)
     {
-        playerSkillModel.UseSkill(playerSkillView.btnG.GetSkill());
+        if (playerSkillView.btnG.skillUsable)
+        {
+            DragDropSkillItem skill = playerSkillView.btnG.GetSkill();
+
+            if (skill != null)
+            {
+                playerSkillModel.UseSkill(skill);
+                playerSkillView.btnG.SetCooldown(skill.skillSO.attackData.cooldown);
+            }
+        }
     }
 }
