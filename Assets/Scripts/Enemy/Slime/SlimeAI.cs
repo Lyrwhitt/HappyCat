@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class SlimeAI : MonoBehaviour
 {
     private Slime slime;
+
+    private AnimationEventReceiver eventReceiver;
 
     private Transform player;
     private BTNode root;
@@ -23,11 +26,34 @@ public class SlimeAI : MonoBehaviour
     private float roamRange = 3f; // 돌아다닐 범위
     private bool roaming = false; // Roam 중인지 여부를 나타내는 플래그
 
+    [field: SerializeField] public AttackInfoData normalAttackInfo;
+
+
+    public Test testGizmo;
+
+    private void OnDrawGizmos()
+    {
+        if (testGizmo == null)
+            return;
+
+        if (!testGizmo.testGizmo)
+            return;
+
+        // 디버그 모드에서 사각형 영역을 시각화합니다.
+        Gizmos.color = Color.red;
+
+        Gizmos.matrix = Matrix4x4.TRS(testGizmo.testGizmoCenter, testGizmo.testGizmoRotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, testGizmo.testGizmoSize);
+    }
+
     private void Start()
     {
         slime = this.GetComponent<Slime>();
+        eventReceiver = GetComponentInChildren<AnimationEventReceiver>();
 
         player = GameManager.Instance.player.transform;
+
+        eventReceiver.animationEvent += AttackEvent;
 
         SelectorNode selector = new SelectorNode();
 
@@ -74,6 +100,33 @@ public class SlimeAI : MonoBehaviour
     {
         root.Evaluate();
     }
+
+    #region Animation Event
+    public void AttackEvent()
+    {
+        Vector3 boxCenter = normalAttackInfo.hitBoxCenterOffset + this.transform.position + this.transform.forward *
+            normalAttackInfo.hitBox.z / 2f;
+        Quaternion boxRotation = Quaternion.LookRotation(this.transform.forward);
+
+        testGizmo = new Test(true, normalAttackInfo.hitBox, boxCenter, boxRotation);
+
+        Collider[] colliders = Physics.OverlapBox(boxCenter, normalAttackInfo.hitBox / 2f, boxRotation);
+
+        // 각각의 충돌한 오브젝트에 대해 처리합니다.
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                if (collider.transform.TryGetComponent(out DamageReceiver damageReceiver))
+                {
+                    Vector3 force = Vector3.zero;
+
+                    damageReceiver.Damage(normalAttackInfo.damage, force);
+                }
+            }
+        }
+    }
+    #endregion
 
     #region Damage Sequence
     private bool DamageCondition()
