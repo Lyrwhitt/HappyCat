@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class PlayerNormalAttackState : PlayerAttackState
@@ -20,6 +21,7 @@ public class PlayerNormalAttackState : PlayerAttackState
         base.EnterState();
 
         stateMachine.player.animationEventReceiver.animationEvent += DamageEnemy;
+        stateMachine.player.animationEventReceiver.SetAnimationEvent(stateMachine.player.data.attackData.attackID);
 
         SetAnimationBool(stateMachine.player.animationData.comboAttackParameterHash, true);
 

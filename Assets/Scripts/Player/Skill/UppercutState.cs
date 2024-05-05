@@ -26,6 +26,7 @@ public class UppercutState : PlayerSkillState
         alreadyApplyForce = false;
 
         stateMachine.player.animationEventReceiver.animationEvent += DamageEnemy;
+        stateMachine.player.animationEventReceiver.SetAnimationEvent(attackData.attackID);
 
         SetAnimationBool(stateMachine.player.animationData.uppercutParameterHash, true);
     }

@@ -39,6 +39,7 @@ public class GatlingPunchState : PlayerSkillState
         currentSpeed = 1.1f;
 
         stateMachine.player.animationEventReceiver.animationEvent += DamageEnemy;
+        stateMachine.player.animationEventReceiver.SetAnimationEvent(attackData.attackID);
 
         SetAnimationBool(stateMachine.player.animationData.gatlingPunchParameterHash, true);
         stateMachine.player.animator.SetInteger("GatlingPunchCombo", 0);

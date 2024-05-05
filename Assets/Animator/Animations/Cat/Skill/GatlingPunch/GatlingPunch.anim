@@ -50715,7 +50715,7 @@ AnimationClip:
     objectReferenceParameter: {fileID: 11500000, guid: f8658ecb7a8411c4ca565d512b46c015,
       type: 3}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 1002
     messageOptions: 0
   - time: 0.43333334
     functionName: OnCalledEvent
@@ -50723,7 +50723,7 @@ AnimationClip:
     objectReferenceParameter: {fileID: 11500000, guid: f8658ecb7a8411c4ca565d512b46c015,
       type: 3}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 1002
     messageOptions: 0
   - time: 0.6666667
     functionName: OnCalledEvent
@@ -50731,7 +50731,7 @@ AnimationClip:
     objectReferenceParameter: {fileID: 11500000, guid: f8658ecb7a8411c4ca565d512b46c015,
       type: 3}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 1002
     messageOptions: 0
   - time: 0.96666664
     functionName: OnCalledEvent
@@ -50739,5 +50739,5 @@ AnimationClip:
     objectReferenceParameter: {fileID: 11500000, guid: f8658ecb7a8411c4ca565d512b46c015,
       type: 3}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 1002
     messageOptions: 0
