@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class InventoryModel
 {
-    private Dictionary<int, ItemSO> itemData;
-    public Dictionary<int, Item> items;
+    private Dictionary<int, ItemSO> itemData = new Dictionary<int, ItemSO>();
+    public SortedDictionary<int, Item> items = new SortedDictionary<int, Item>();
 
     public void LoadItemData()
     {
-        ItemSO[] datas = Resources.LoadAll<ItemSO>("Items");
+        ItemSO[] datas = Resources.LoadAll<ItemSO>("Items/Data");
 
         for(int i = 0; i < datas.Length; i++)
         {
@@ -53,17 +53,17 @@ public class InventoryModel
     }
     */
 
-    public void AddItem(Item addItem, int cellNum)
+    public void AddItem(Item addItem)
     {
         int itemIdx = SearchInventory(addItem);
 
-        if (itemIdx != -1) 
+        if (items.ContainsKey(itemIdx))
         {
             items[itemIdx].quantity += addItem.quantity;
         }
         else
         {
-            items[cellNum].quantity += addItem.quantity;
+            items[itemIdx] = addItem;
         }
     }
 
@@ -89,14 +89,21 @@ public class InventoryModel
 
     public int SearchInventory(Item searchItem)
     {
+        int minIdx = 0;
+
         foreach (var item in items)
         {
             if(item.Value.itemData.itemId == searchItem.itemData.itemId)
             {
                 return item.Key;
             }
+
+            if(item.Key == minIdx)
+            {
+                minIdx += 1;
+            }
         }
 
-        return -1;
+        return minIdx;
     }
 }

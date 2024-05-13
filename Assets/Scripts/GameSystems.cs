@@ -16,3 +16,18 @@ public class SkillMenuCommand : ICommand
         skillMenu.OpenSkillMenu();
     }
 }
+
+public class InventoryCommand : ICommand
+{
+    private InventoryView inventoryView;
+
+    public InventoryCommand(InventoryView inventoryView)
+    {
+        this.inventoryView = inventoryView;
+    }
+    
+    public void Execute()
+    {
+        inventoryView.OpenInventory();
+    }
+}

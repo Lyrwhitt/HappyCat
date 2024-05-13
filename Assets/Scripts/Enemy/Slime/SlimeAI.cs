@@ -226,8 +226,6 @@ public class SlimeAI : MonoBehaviour
         NavMeshHit hit;
         NavMesh.SamplePosition(randomDirection, out hit, roamRange, NavMesh.AllAreas);
 
-        Debug.Log(hit.position);
-
         return hit.position;
     }
 

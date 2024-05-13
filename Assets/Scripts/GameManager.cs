@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -38,7 +39,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     public Player player;
+
+    [Header("Manager")]
+    public ItemCreator itemCreator;
 
     [Header("System Input")]
     public SystemInputAction inputAction;
@@ -46,15 +52,23 @@ public class GameManager : MonoBehaviour
 
     [Header("System Command")]
     private ICommand commandK;
+    private ICommand commandI;
 
     [Header("Game System")]
     private SkillMenuCommand skillMenuCommand;
+    private InventoryCommand inventoryCommand;
 
     [Header("Skill")]
     public SkillMenu skillMenu;
 
+    [Header("Inventory")]
+    public InventoryView inventory;
+
     private void Start()
     {
+        itemCreator = this.GetComponent<ItemCreator>();
+        itemCreator.InitItemCreator();
+
         InitSystemCommand();
 
         AddInputActionsCallbacks();
@@ -72,6 +86,7 @@ public class GameManager : MonoBehaviour
     private void SetGameSystem()
     {
         skillMenuCommand = new SkillMenuCommand(skillMenu);
+        inventoryCommand = new InventoryCommand(inventory);
     }
 
     public void ChangeCursorLockMode(CursorLockMode cursorLockMode)
@@ -97,16 +112,24 @@ public class GameManager : MonoBehaviour
     private void InitSystemCommand()
     {
         commandK = skillMenuCommand;
+        commandI = inventoryCommand;
     }
 
     private void AddInputActionsCallbacks()
     {
         systemActions.K.started += OnBtnKStarted;
+        systemActions.I.started += OnBtnIStarted;
     }
 
     private void OnBtnKStarted(InputAction.CallbackContext obj)
     {
         if (commandK != null)
             commandK.Execute();
+    }
+
+    private void OnBtnIStarted(InputAction.CallbackContext obj)
+    {
+        if (commandI != null)
+            commandI.Execute();
     }
 }

@@ -30,3 +30,8 @@ public class SaveItemData
         this.quantity = quantity;
     }
 }
+
+public enum ItemRarity
+{
+    Common, Uncommon, Rare, Epic, Legendary
+}

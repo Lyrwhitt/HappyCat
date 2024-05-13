@@ -1,5 +1,5 @@
 {
-    "name": "SystemInput",
+    "name": "SystemInputAction",
     "maps": [
         {
             "name": "System",
@@ -9,6 +9,15 @@
                     "name": "K",
                     "type": "Button",
                     "id": "14f8fd40-aadc-468c-b410-42728426817b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "I",
+                    "type": "Button",
+                    "id": "0af7c671-3e9d-4b5b-a3fe-640148c06315",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -24,6 +33,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "K",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd1f37b9-f145-4a6f-b6b7-d0e09f26f62e",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "I",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

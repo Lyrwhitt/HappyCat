@@ -23,7 +23,7 @@ public class InventoryView : MonoBehaviour
 
     private void OnCloseBtnClicked()
     {
-        UIManager.Instance.CloseUI();
+        OpenInventory();
     }
 
     public void ClearInventory()
@@ -45,5 +45,19 @@ public class InventoryView : MonoBehaviour
     public void OnRemoveItem(int cellNum)
     {
         cells[cellNum].ClearCell();
+    }
+
+    public void OpenInventory()
+    {
+        if (!this.gameObject.activeSelf)
+        {
+            GameManager.Instance.ChangeCursorLockMode(CursorLockMode.None);
+            this.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameManager.Instance.ChangeCursorLockMode(CursorLockMode.Locked);
+            this.gameObject.SetActive(false);
+        }
     }
 }

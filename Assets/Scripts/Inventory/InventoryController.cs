@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
@@ -7,12 +8,12 @@ public class InventoryController : MonoBehaviour
     private DataManager<List<SaveItemData>> inventoryDataManager;
     private List<SaveItemData> inventoryData;
 
-    private InventoryView inventoryView;
+    public InventoryView inventoryView;
     private InventoryModel inventoryModel;
 
     private void Awake()
     {
-        inventoryView = this.GetComponent<InventoryView>();
+        SetInventoryData();
     }
 
     private void Start()
@@ -23,20 +24,26 @@ public class InventoryController : MonoBehaviour
         inventoryView.InitializeInventoryView(inventoryModel);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ItemSO addItem = Resources.Load<ItemSO>("Item/TestItem");
-            Debug.Log("Add Item : " + addItem.name);
-            //inventoryModel.AddItem(addItem, 1, new NoEffect());
-            inventoryView.UpdateInventory();
-        }
-    }
-
     private void OnApplicationQuit()
     {
         SaveInventoryData();
+    }
+
+    public void AddInventoryItem(Item addItem)
+    {
+        inventoryModel.AddItem(addItem);
+        inventoryView.UpdateInventory();
+    }
+
+    private void SetInventoryData()
+    {
+        inventoryDataManager = new DataManager<List<SaveItemData>>(Path.Combine(Application.persistentDataPath, "InventoryData.json"));
+        inventoryData = inventoryDataManager.LoadData();
+
+        if (inventoryData == null)
+        {
+            inventoryData = new List<SaveItemData>();
+        }
     }
 
     private void SaveInventoryData()

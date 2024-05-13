@@ -9,4 +9,5 @@ public class ItemSO : ScriptableObject
     public string itemName;
     [TextArea(4, 10)] public string itemDescription;
     public Sprite itemImg;
+    public ItemRarity itemRarity;
 }

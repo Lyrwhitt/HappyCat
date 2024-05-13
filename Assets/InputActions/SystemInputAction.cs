@@ -35,6 +35,15 @@ public partial class @SystemInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""I"",
+                    ""type"": ""Button"",
+                    ""id"": ""0af7c671-3e9d-4b5b-a3fe-640148c06315"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,6 +57,17 @@ public partial class @SystemInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""K"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd1f37b9-f145-4a6f-b6b7-d0e09f26f62e"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""I"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -57,6 +77,7 @@ public partial class @SystemInputAction: IInputActionCollection2, IDisposable
         // System
         m_System = asset.FindActionMap("System", throwIfNotFound: true);
         m_System_K = m_System.FindAction("K", throwIfNotFound: true);
+        m_System_I = m_System.FindAction("I", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -119,11 +140,13 @@ public partial class @SystemInputAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_System;
     private List<ISystemActions> m_SystemActionsCallbackInterfaces = new List<ISystemActions>();
     private readonly InputAction m_System_K;
+    private readonly InputAction m_System_I;
     public struct SystemActions
     {
         private @SystemInputAction m_Wrapper;
         public SystemActions(@SystemInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @K => m_Wrapper.m_System_K;
+        public InputAction @I => m_Wrapper.m_System_I;
         public InputActionMap Get() { return m_Wrapper.m_System; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,6 +159,9 @@ public partial class @SystemInputAction: IInputActionCollection2, IDisposable
             @K.started += instance.OnK;
             @K.performed += instance.OnK;
             @K.canceled += instance.OnK;
+            @I.started += instance.OnI;
+            @I.performed += instance.OnI;
+            @I.canceled += instance.OnI;
         }
 
         private void UnregisterCallbacks(ISystemActions instance)
@@ -143,6 +169,9 @@ public partial class @SystemInputAction: IInputActionCollection2, IDisposable
             @K.started -= instance.OnK;
             @K.performed -= instance.OnK;
             @K.canceled -= instance.OnK;
+            @I.started -= instance.OnI;
+            @I.performed -= instance.OnI;
+            @I.canceled -= instance.OnI;
         }
 
         public void RemoveCallbacks(ISystemActions instance)
@@ -163,5 +192,6 @@ public partial class @SystemInputAction: IInputActionCollection2, IDisposable
     public interface ISystemActions
     {
         void OnK(InputAction.CallbackContext context);
+        void OnI(InputAction.CallbackContext context);
     }
 }
