@@ -87,6 +87,7 @@ public class ObjectPool : MonoBehaviour
         }
 
         obj.SetActive(false);
+        obj.transform.SetParent(this.transform, false);
         poolDictionary[tag].Enqueue(obj);
     }
 }
