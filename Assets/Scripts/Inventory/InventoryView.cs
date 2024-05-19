@@ -36,9 +36,9 @@ public class InventoryView : MonoBehaviour
 
     public void UpdateInventory()
     {
-        for (int i = 0; i < inventoryModel.items.Count; i++)
+        foreach (KeyValuePair<int, Item> kvp in inventoryModel.items)
         {
-            cells[i].SetItem(inventoryModel.items[i]);
+            cells[kvp.Key].SetItem(kvp.Value);
         }
     }
 

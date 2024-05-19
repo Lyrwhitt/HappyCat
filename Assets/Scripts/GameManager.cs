@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         itemCreator = this.GetComponent<ItemCreator>();
-        itemCreator.InitItemCreator();
 
         InitSystemCommand();
 

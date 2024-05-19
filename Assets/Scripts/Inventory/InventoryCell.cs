@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public Item item;
     public Image itemImg;
@@ -17,9 +17,16 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private Vector2 offset = new Vector2(470f, -100f);
 
+    private DragDropItem dragDropItem;
+    private RectTransform dragDropRectTransform;
+    private CanvasGroup itemImgCG;
+
+    private bool isDragging = false;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        itemImgCG = itemImg.GetComponent<CanvasGroup>();
     }
 
     private void Start()
@@ -29,7 +36,7 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (item == null)
+        if (item == null || isDragging)
             return;
 
         itemTooltip = ObjectPool.Instance.SpawnFromPool("ItemTooltip", Vector3.zero, Quaternion.identity,
@@ -65,7 +72,55 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         ObjectPool.Instance.ReturnToPool("ItemTooltip", itemTooltip.gameObject);
         itemTooltip = null;
     }
-    
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        dragDropItem = Instantiate(Resources.Load<DragDropItem>("UI/Inventory/DragDropItem"), UIManager.Instance.canvas.transform);
+        dragDropRectTransform = dragDropItem.GetComponent<RectTransform>();
+        dragDropItem.SetItem(item);
+
+        itemImgCG.alpha = 0.6f;
+        isDragging = true;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        dragDropRectTransform.position = Input.mousePosition;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        itemImgCG.alpha = 1f;
+        isDragging = false; 
+
+        if (eventData.pointerEnter != null && eventData.pointerEnter.tag == "ShortcutSlot")
+        {
+            InventoryCell inventoryCell = eventData.pointerEnter.GetComponent<InventoryCell>();
+
+            if(inventoryCell.item != null)
+            {
+                Item changeItem = inventoryCell.item;
+                inventoryCell.SetItem(this.item);
+                SetItem(changeItem);
+            }
+            else
+            {
+                inventoryCell.SetItem(item);
+                ClearCell();
+            }
+
+            dragDropRectTransform.position = eventData.pointerEnter.transform.position;
+
+            Destroy(dragDropItem.gameObject);
+        }
+        else
+        {
+            Destroy(dragDropItem.gameObject);
+            // юс╫ц
+            ClearCell();
+        }
+    }
+
     public void ClearCell()
     {
         item = null;

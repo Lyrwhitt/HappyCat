@@ -11,6 +11,7 @@ TagManager:
   - ShortcutSlot
   - SkillItem
   - Map
+  - UI
   layers:
   - Default
   - TransparentFX

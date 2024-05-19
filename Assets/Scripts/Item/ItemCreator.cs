@@ -37,7 +37,7 @@ public class ItemCreator : MonoBehaviour
         if (!itemData.ContainsKey(itemId))
             return;
 
-        Item newItem = new Item(itemData[itemId], quantity); 
+        Item newItem = new Item(itemData[itemId], quantity);
 
         GameObject newItemObj = ObjectPool.Instance.SpawnFromPool("Item", createPos, Quaternion.identity);
         newItemObj.GetComponent<ItemController>().SetItem(newItem);

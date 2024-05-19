@@ -48,6 +48,8 @@ public class InventoryController : MonoBehaviour
 
     private void SaveInventoryData()
     {
+        inventoryData.Clear();
+
         for (int i = 0; i < inventoryView.cells.Count; i++)
         {
             Item item = inventoryView.cells[i].item;
@@ -56,6 +58,8 @@ public class InventoryController : MonoBehaviour
             {
                 SaveItemData saveData = new SaveItemData(i, item.itemData.itemId, item.quantity);
                 inventoryData.Add(saveData);
+
+                Debug.Log("Save " + i + " Index");
             }
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DragDropSkillItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragDropSkillItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [HideInInspector] public PlayerSkillSO skillSO;
 
@@ -24,10 +24,6 @@ public class DragDropSkillItem : MonoBehaviour, IPointerDownHandler, IBeginDragH
     {
         skillSO = skillData;
         skillIcon.sprite = skillData.attackData.attackImg;
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
     }
 
     public void OnBeginDrag(PointerEventData eventData)

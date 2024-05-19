@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2199885686492919125}
   - component: {fileID: 99743348707203832}
   - component: {fileID: 4224501135719070449}
+  - component: {fileID: 2767779382416080215}
   m_Layer: 5
   m_Name: ItemImage
   m_TagString: Untagged
@@ -76,6 +77,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2767779382416080215
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10631753852797049}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &3860734761475409343
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +240,7 @@ GameObject:
   - component: {fileID: 2346987443508320595}
   m_Layer: 5
   m_Name: Cell
-  m_TagString: Untagged
+  m_TagString: ShortcutSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

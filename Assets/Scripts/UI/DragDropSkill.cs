@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragDropSkill : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragDropSkill : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private UISkillInfo skillInfo;
     private RectTransform rectTransform;
@@ -15,14 +15,8 @@ public class DragDropSkill : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
 
     private void Awake()
     {
-        //rectTransform = GetComponent<RectTransform>();
         skillInfo = this.transform.parent.GetComponent<UISkillInfo>();
         canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //originalPos = rectTransform.position;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -47,7 +41,6 @@ public class DragDropSkill : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
 
         if (eventData.pointerEnter != null && eventData.pointerEnter.tag == "ShortcutSlot")
         {
-            //rectTransform.position = eventData.pointerEnter.transform.position;
             SkillCell skillCell = eventData.pointerEnter.GetComponent<SkillCell>();
 
             if (skillCell.skill != null)
@@ -69,7 +62,6 @@ public class DragDropSkill : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
         }
         else
         {
-            //rectTransform.position = originalPos;
             Destroy(dragDropItem.gameObject);
         }
     }
