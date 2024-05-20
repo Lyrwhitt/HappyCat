@@ -122,6 +122,7 @@ public class SlimeAI : MonoBehaviour
                     Vector3 force = Vector3.zero;
 
                     damageReceiver.Damage(normalAttackInfo.damage, force);
+                    damageReceiver.Stagger(0.2f);
                 }
             }
         }

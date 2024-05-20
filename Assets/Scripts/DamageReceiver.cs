@@ -38,6 +38,8 @@ public class DamageReceiver : MonoBehaviour
         if (isStagger)
         {
             staggerTime -= Time.deltaTime;
+
+            animator.SetFloat("StaggerTime", staggerTime);
         }
     }
 
@@ -49,6 +51,9 @@ public class DamageReceiver : MonoBehaviour
 
     public void Stagger(float time)
     {
+        if (isAirborne)
+            return;
+
         animator.SetTrigger("Stagger");
         staggerTime = time;
     }

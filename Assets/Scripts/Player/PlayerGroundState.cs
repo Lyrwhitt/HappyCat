@@ -71,6 +71,9 @@ public class PlayerGroundState : PlayerBaseState
 
     protected override void OnJumpStarted(InputAction.CallbackContext context)
     {
+        if (damageReceiver.isStagger || damageReceiver.isAirborne)
+            return;
+
         stateMachine.ChangeState(stateMachine.jumpState);
     }
 
@@ -89,11 +92,17 @@ public class PlayerGroundState : PlayerBaseState
 
     protected virtual void OnMove()
     {
+        if (damageReceiver.isStagger || damageReceiver.isAirborne)
+            return;
+
         stateMachine.ChangeState(stateMachine.runState);
     }
 
     protected virtual void OnAttack()
     {
+        if (damageReceiver.isStagger || damageReceiver.isAirborne)
+            return;
+
         stateMachine.ChangeState(stateMachine.normalAttackState);
     }
 }

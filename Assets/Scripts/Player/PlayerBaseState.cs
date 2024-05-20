@@ -8,10 +8,12 @@ public class PlayerBaseState : IState
 {
     protected PlayerStateMachine stateMachine;
     protected readonly PlayerGroundData groundData;
+    protected DamageReceiver damageReceiver;
     public PlayerBaseState(PlayerStateMachine playerStateMachine)
     {
         stateMachine = playerStateMachine;
         groundData = stateMachine.player.data.groundedData;
+        damageReceiver = stateMachine.player.GetComponent<DamageReceiver>();
     }
 
     public virtual void EnterState()
@@ -31,6 +33,9 @@ public class PlayerBaseState : IState
 
     public virtual void UpdateState()
     {
+        if (damageReceiver.isStagger || damageReceiver.isAirborne)
+            return;
+
         Move();
     }
 
@@ -101,7 +106,9 @@ public class PlayerBaseState : IState
     }
     protected virtual void OnDashStarted(InputAction.CallbackContext context)
     {
-        if (!stateMachine.player.groundDetection.isGrounded)
+        if (!stateMachine.player.groundDetection.isGrounded || 
+            damageReceiver.isStagger ||
+            damageReceiver.isAirborne)
             return;
 
         if (CooldownManager.Instance.SkillUsable("Dash", 2.0f))
