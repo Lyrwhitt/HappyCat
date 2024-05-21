@@ -15,8 +15,8 @@ public class SlimeAI : MonoBehaviour
 
     public float waitTime = 0f;
 
-    private float lastAttackTime;
-    private float attackCooldown = 2f;
+    private float lastAttackTime = 0f;
+    private float attackCooldown = 5f;
 
     public float detectDistance = 10f;
     public float attackDistance = 2f;
@@ -54,6 +54,8 @@ public class SlimeAI : MonoBehaviour
         player = GameManager.Instance.player.transform;
 
         eventReceiver.animationEvent += AttackEvent;
+        slime.damageReceiver.onAirborne += OnAirborne;
+        slime.damageReceiver.onStagger += OnStagger;
 
         SelectorNode selector = new SelectorNode();
 
@@ -101,6 +103,16 @@ public class SlimeAI : MonoBehaviour
         root.Evaluate();
     }
 
+    private void OnStagger()
+    {
+        slime.animator.SetTrigger("Stagger");
+    }
+
+    private void OnAirborne()
+    {
+        slime.animator.SetTrigger("Airborne");
+    }
+
     #region Animation Event
     public void AttackEvent()
     {
@@ -121,8 +133,11 @@ public class SlimeAI : MonoBehaviour
                 {
                     Vector3 force = Vector3.zero;
 
+                    //force = transform.forward * 5f + collider.transform.up * 15f;
+
                     damageReceiver.Damage(normalAttackInfo.damage, force);
                     damageReceiver.Stagger(0.2f);
+                    //damageReceiver.Airborne(0.3f, -4.8f, 1f);
                 }
             }
         }
@@ -247,9 +262,8 @@ public class SlimeAI : MonoBehaviour
 
     private NodeState AttackPlayer()
     {
-        if ((Time.time - lastAttackTime) >= attackCooldown)
+        if (((Time.time - lastAttackTime) >= attackCooldown) || (lastAttackTime == 0))
         {
-            Debug.Log("Attacking Player!");
             lastAttackTime = Time.time; // 마지막 공격 시간 업데이트
 
             this.transform.LookAt(player);

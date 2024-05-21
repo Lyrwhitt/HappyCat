@@ -58,8 +58,6 @@ public class InventoryController : MonoBehaviour
             {
                 SaveItemData saveData = new SaveItemData(i, item.itemData.itemId, item.quantity);
                 inventoryData.Add(saveData);
-
-                Debug.Log("Save " + i + " Index");
             }
         }
 

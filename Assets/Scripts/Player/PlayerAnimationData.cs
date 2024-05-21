@@ -26,6 +26,9 @@ public class PlayerAnimationData
 
     [SerializeField] private string _hitParameterName = "@Hit";
     [SerializeField] private string _staggerParameterName = "Stagger";
+    [SerializeField] private string _airborneParameterName = "Airborne";
+    [SerializeField] private string _standParameterName = "Stand";
+    [SerializeField] private string _downParameterName = "Down";
 
     public int groundParameterHash { get; private set; }
     public int idleParameterHash { get; private set; }
@@ -47,6 +50,9 @@ public class PlayerAnimationData
 
     public int hitParameterHash { get; private set; }
     public int staggerParameterHash { get; private set; }
+    public int airborneParameterHash { get; private set; }
+    public int standParameterHash { get; private set; }
+    public int downParameterHash { get; private set; }
 
     public void Initialize()
     {
@@ -70,5 +76,8 @@ public class PlayerAnimationData
 
         hitParameterHash = Animator.StringToHash(_hitParameterName);
         staggerParameterHash = Animator.StringToHash(_staggerParameterName);
+        airborneParameterHash = Animator.StringToHash(_airborneParameterName);
+        standParameterHash = Animator.StringToHash(_standParameterName);
+        downParameterHash = Animator.StringToHash(_downParameterName);
     }
 }

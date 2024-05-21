@@ -49,8 +49,6 @@ public class PlayerSkillModel
             return;
         }
 
-        Debug.Log("스킬 아이디 : " + skill.skillSO.attackData.attackID);
-
         skillDictionary[skill.skillSO.attackData.attackID].Execute();
     }
 

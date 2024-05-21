@@ -21,8 +21,6 @@ public class EnemyStatus : Health
     {
         base.TakeDamage(damage);
 
-        Debug.Log(health);
-
         DamageText damageText;
         damageText = ObjectPool.Instance.SpawnFromPool("DamageText", Vector3.zero, Quaternion.identity,
             UIManager.Instance.canvas.transform).GetComponent<DamageText>();

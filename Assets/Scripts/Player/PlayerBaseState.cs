@@ -19,11 +19,13 @@ public class PlayerBaseState : IState
     public virtual void EnterState()
     {
         AddInputActionsCallbacks();
+        AddEvents();
     }
 
     public virtual void ExitState()
     {
         RemoveInputActionsCallbacks();
+        RemoveEvents();
     }
 
     public virtual void HandleInput()
@@ -33,16 +35,13 @@ public class PlayerBaseState : IState
 
     public virtual void UpdateState()
     {
-        if (damageReceiver.isStagger || damageReceiver.isAirborne)
-            return;
-
         Move();
     }
 
     public virtual void FixedUpdateState()
     {
 
-    } 
+    }
 
 
     protected virtual void AddInputActionsCallbacks()
@@ -71,7 +70,44 @@ public class PlayerBaseState : IState
         input.playerActions.Attack.canceled -= OnAttackCanceled;
 
         input.playerActions.Dash.started -= OnDashStarted;
+
         //input.playerActions.Skill_Btn_Q.started -= OnBtnQStarted;
+    }
+
+    protected virtual void AddEvents()
+    {
+        damageReceiver.onAirborne += OnAirborne;
+        damageReceiver.onDown += OnDown;
+        damageReceiver.onStagger += OnStagger;
+        damageReceiver.onStand += OnStand;
+    }
+
+    protected virtual void RemoveEvents()
+    {
+        damageReceiver.onAirborne -= OnAirborne;
+        damageReceiver.onDown -= OnDown;
+        damageReceiver.onStagger -= OnStagger;
+        damageReceiver.onStand -= OnStand;
+    }
+
+    protected void OnAirborne()
+    {
+        stateMachine.ChangeState(stateMachine.airborneState);
+    }
+
+    protected void OnStagger()
+    {
+        stateMachine.ChangeState(stateMachine.staggerState);
+    }
+
+    protected void OnStand()
+    {
+        stateMachine.ChangeState(stateMachine.standState);
+    }
+
+    protected void OnDown()
+    {
+        stateMachine.ChangeState(stateMachine.downState);
     }
 
     /*
@@ -106,9 +142,7 @@ public class PlayerBaseState : IState
     }
     protected virtual void OnDashStarted(InputAction.CallbackContext context)
     {
-        if (!stateMachine.player.groundDetection.isGrounded || 
-            damageReceiver.isStagger ||
-            damageReceiver.isAirborne)
+        if (!stateMachine.player.groundDetection.isGrounded)
             return;
 
         if (CooldownManager.Instance.SkillUsable("Dash", 2.0f))
@@ -182,6 +216,11 @@ public class PlayerBaseState : IState
     protected void SetAnimationFloat(int animationHash, float value)
     {
         stateMachine.player.animator.SetFloat(animationHash, value);
+    }
+
+    protected void SetAnimationTrigger(int animationHash)
+    {
+        stateMachine.player.animator.SetTrigger(animationHash);
     }
 
     protected float GetNormalizedTime(Animator animator, string tag)

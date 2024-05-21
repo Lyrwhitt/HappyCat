@@ -14,6 +14,10 @@ public class PlayerStateMachine : StateMachine
     public PlayerFallState fallState;
     public PlayerNormalAttackState normalAttackState;
     public PlayerDashState dashState;
+    public PlayerAirborneState airborneState;
+    public PlayerStaggerState staggerState;
+    public PlayerStandState standState;
+    public PlayerDownState downState;
 
     [Header("Skill State")]
     public UppercutState uppercutState;
@@ -45,6 +49,11 @@ public class PlayerStateMachine : StateMachine
         fallState = new PlayerFallState(this);
         normalAttackState = new PlayerNormalAttackState(this);
         dashState = new PlayerDashState(this);
+
+        staggerState = new PlayerStaggerState(this);
+        airborneState = new PlayerAirborneState(this);
+        standState = new PlayerStandState(this);
+        downState = new PlayerDownState(this);
 
         uppercutState = new UppercutState(this);
         gatlingPunchState = new GatlingPunchState(this);
