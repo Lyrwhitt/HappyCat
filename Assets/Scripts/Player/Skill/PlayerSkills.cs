@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Skill : ICommand
+public class Skill : ISkillCommand
 {
     protected Player player;
     protected PlayerSkillSO skillData;
@@ -12,7 +12,10 @@ public class Skill : ICommand
     public int skillId;
     protected int skillLevel;
 
-    public virtual void Execute() { }
+    public virtual float Execute() 
+    {
+        return skillData.attackData.cooldown;
+    }
 
     public void SetSkillLevel(int skillLevel)
     {
@@ -48,16 +51,25 @@ public class Uppercut : Skill
         }
     }
 
-    public override void Execute()
+    public override float Execute()
     {
         if (!player.groundDetection.isGrounded)
         {
             Debug.Log("Player is not Grounded!");
-            return;
+            return 0;
         }
 
         if (CooldownManager.Instance.SkillUsable("Uppercut", skillData.attackData.cooldown))
+        {
             player.stateMachine.ChangeState(player.stateMachine.uppercutState);
+
+            return skillData.attackData.cooldown;
+        }
+        else
+        {
+            Debug.Log("CoolTime!");
+            return 0;
+        }
     }
 }
 
@@ -81,15 +93,24 @@ public class GatlingPunch : Skill
         }
     }
 
-    public override void Execute()
+    public override float Execute()
     {
         if (!player.groundDetection.isGrounded)
         {
             Debug.Log("Player is not Grounded!");
-            return;
+            return 0;
         }
 
         if (CooldownManager.Instance.SkillUsable("GatlingPunch", skillData.attackData.cooldown))
+        {
             player.stateMachine.ChangeState(player.stateMachine.gatlingPunchState);
+
+            return skillData.attackData.cooldown;
+        }
+        else
+        {
+            Debug.Log("CoolTime!");
+            return 0;
+        }
     }
 }

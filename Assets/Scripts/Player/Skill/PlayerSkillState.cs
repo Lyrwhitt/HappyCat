@@ -22,5 +22,7 @@ public class PlayerSkillState : PlayerBaseState
         base.ExitState();
 
         SetAnimationBool(stateMachine.player.animationData.skillParameterHash, false);
+
+        stateMachine.player.forceReceiver.ResetForceReceiver();
     }
 }

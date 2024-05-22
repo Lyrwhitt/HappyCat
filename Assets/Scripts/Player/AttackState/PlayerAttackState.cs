@@ -22,5 +22,7 @@ public class PlayerAttackState : PlayerBaseState
         base.ExitState();
 
         SetAnimationBool(stateMachine.player.animationData.attackParameterHash, false);
+
+        stateMachine.player.forceReceiver.ResetForceReceiver();
     }
 }

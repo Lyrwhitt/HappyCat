@@ -10,6 +10,9 @@ public class ForceReceiver : MonoBehaviour
     public float drag = 0.3f;
     public float gravity = -9.8f;
 
+    private float dragOrigin;
+    private float gravityOrigin;
+
     private Vector3 dampingVelocity;
     private Vector3 impact;
     private float verticalVelocity;
@@ -19,6 +22,9 @@ public class ForceReceiver : MonoBehaviour
     private void Awake()
     {
         controller = this.GetComponent<CharacterController>();
+
+        dragOrigin = drag;
+        gravityOrigin = gravity;
     }
 
     private void Update()
@@ -35,10 +41,14 @@ public class ForceReceiver : MonoBehaviour
         // 타겟까지 감속도달
         impact = Vector3.SmoothDamp(impact, Vector3.zero, ref dampingVelocity, drag);
     }
+
     public void ResetForceReceiver()
     {
         impact = Vector3.zero;
         verticalVelocity = 0f;
+
+        drag = dragOrigin;
+        gravity = gravityOrigin;
     }
 
     public void AddForce(Vector3 force)

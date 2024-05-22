@@ -41,15 +41,15 @@ public class PlayerSkillModel
         skillDictionary[skillId].SetSkillLevel(level);
     }
 
-    public void UseSkill(DragDropSkillItem skill)
+    public float UseSkill(DragDropSkillItem skill)
     {
         if (skill == null)
         {
             Debug.Log("DragDropSkillItem is Null");
-            return;
+            return 0;
         }
-
-        skillDictionary[skill.skillSO.attackData.attackID].Execute();
+        else
+            return skillDictionary[skill.skillSO.attackData.attackID].Execute();
     }
 
     public PlayerSkillModel(Player player)
