@@ -33,6 +33,13 @@ public class Health : MonoBehaviour
             onDie?.Invoke();
     }
 
+    public virtual void RecoveryHealth(float amount)
+    {
+        health = Mathf.Clamp(health + amount, 0f, statusData.maxHP);
+
+        onHealthChange?.Invoke();
+    }
+
     public float GetPercentageHP()
     {
         return health / statusData.maxHP;

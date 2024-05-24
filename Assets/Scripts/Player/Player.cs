@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public Camera playerCamera;
     [HideInInspector] public CinemachineBrain playerCameraBrain;
     [HideInInspector] public GroundDetection groundDetection;
+    [HideInInspector] public PlayerStatus status;
 
     public Test testGizmo;
 
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
         input = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
         forceReceiver = GetComponent<ForceReceiver>();
+        status = GetComponent<PlayerStatus>();
 
         skillController = GetComponent<PlayerSkillController>();
         inventoryController = GetComponent<InventoryController>();

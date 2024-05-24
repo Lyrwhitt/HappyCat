@@ -9,9 +9,9 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
     public Item item;
     public Image itemImg;
-    public Button itemBtn;
     public TextMeshProUGUI quantity;
 
+    private CellButton itemBtn;
     private ItemTooltip itemTooltip;
     private RectTransform rectTransform;
 
@@ -21,17 +21,28 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private RectTransform dragDropRectTransform;
     private CanvasGroup itemImgCG;
 
+    public TextMeshProUGUI cooldownText;
+    private float cooldown = 0f;
+    private GameObject cooldownObj;
+    private Image cooldownImg;
+    private bool itemUsable = true;
+
     private bool isDragging = false;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         itemImgCG = itemImg.GetComponent<CanvasGroup>();
+        itemBtn = GetComponent<CellButton>();
     }
 
     private void Start()
     {
-        itemBtn.onClick.AddListener(ItemBtnClicked);
+        itemBtn.onClick += ItemBtnClicked;
+
+        cooldownObj = cooldownText.transform.parent.gameObject;
+        cooldownObj.SetActive(false);
+        cooldownImg = cooldownObj.GetComponent<Image>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -132,19 +143,13 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void ItemBtnClicked()
     {
-        if (item == null)
+        if (item == null || !itemUsable)
             return;
         else
         {
-            GameObject detailUI = UIManager.Instance.ShowUI("ItemDetail");
-            detailUI.GetComponent<ItemDetail>().SetItemDetail(item);
+            item.UseItem();
 
-            /*
-            ItemDetail itemDetail = Resources.Load<ItemDetail>("UI/ItemDetail");
-            itemDetail.SetItemDetail(item);
-
-            Instantiate(itemDetail);
-            */
+            UpdateCell();
         }
     }
 
@@ -157,4 +162,40 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         itemImg.gameObject.SetActive(true);
     }
 
+    private void UpdateCell()
+    {
+        if (item.quantity <= 0)
+            ClearCell();
+        else
+        {
+            SetCooldown(item.itemData.coolDown);
+            quantity.text = item.quantity.ToString();
+        }
+    }
+
+    private void SetCooldown(float cooldown)
+    {
+        if (itemUsable)
+            CoroutineManager.StartCoroutineStatic(ItemCooldown(cooldown));
+    }
+
+    private IEnumerator ItemCooldown(float cooldown)
+    {
+        itemUsable = false;
+        this.cooldown = cooldown;
+        cooldownObj.SetActive(true);
+
+        while (this.cooldown > 0f)
+        {
+            this.cooldown -= Time.deltaTime;
+
+            cooldownText.SetText(Mathf.FloorToInt(this.cooldown + 1).ToString());
+            cooldownImg.fillAmount = this.cooldown / cooldown;
+
+            yield return null;
+        }
+
+        itemUsable = true;
+        cooldownObj.SetActive(false);
+    }
 }

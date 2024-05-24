@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66865533a6fc4f741a33a22e26f6ab09, type: 3}
   m_Name: TestItem
   m_EditorClassIdentifier: 
+  itemType: 0
+  itemRarity: 0
   itemId: 10000
   itemName: "\uBB34\uB974\uACE0\uAE30"
   itemDescription: "\uB208\uC774\uB9C8\uC8FC\uCCE4\uAD70\uC694"
   itemImg: {fileID: 21300000, guid: b8df8205c726a154fba66bc4a531dac9, type: 3}
+  coolDown: 99
+  recoveryAmount: 1000
