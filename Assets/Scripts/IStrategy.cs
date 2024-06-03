@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IItemStrategy
 {
-    void Use(Item item);
+    public void Use(Item item);
 }

@@ -5,20 +5,23 @@ using UnityEngine.UI;
 
 public class InventoryView : MonoBehaviour
 {
+    private InventoryController inventoryController;
+
     public List<InventoryCell> cells = new List<InventoryCell>();
 
     public Button closeBtn;
 
-    private InventoryModel inventoryModel;
-
-    public void InitializeInventoryView(InventoryModel model)
+    public void InitializeInventoryView(SortedDictionary<int, Item> items, InventoryController controller)
     {
-        inventoryModel = model;
-
         closeBtn.onClick.AddListener(OnCloseBtnClicked);
 
+        for (int i = 0; i < cells.Count; i++)
+        {
+            cells[i].SetCell(i);
+        }
+
         ClearInventory();
-        UpdateInventory();
+        UpdateAllInventoryItem(items);
     }
 
     private void OnCloseBtnClicked()
@@ -34,17 +37,37 @@ public class InventoryView : MonoBehaviour
         }
     }
 
-    public void UpdateInventory()
+    public void UpdateAllInventoryItem(SortedDictionary<int, Item> items)
     {
-        foreach (KeyValuePair<int, Item> kvp in inventoryModel.items)
+        foreach (KeyValuePair<int, Item> kvp in items)
         {
             cells[kvp.Key].SetItem(kvp.Value);
         }
     }
 
+    public void OnAddItem(int cellNum, Item item)
+    {
+        cells[cellNum].SetItem(item);
+    }
+
     public void OnRemoveItem(int cellNum)
     {
         cells[cellNum].ClearCell();
+    }
+
+    public void OnSwapItem(int origin, int swap)
+    {
+        if (cells[swap].item == null)
+        {
+            cells[swap].SetItem(cells[origin].item);
+            cells[origin].ClearCell();
+        }
+        else
+        {
+            Item changeItem = cells[origin].item;
+            cells[origin].SetItem(cells[swap].item);
+            cells[swap].SetItem(changeItem);
+        }
     }
 
     public void OpenInventory()

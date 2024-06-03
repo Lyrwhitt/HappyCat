@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class InventoryModel
 {
     private Dictionary<int, ItemSO> itemData = new Dictionary<int, ItemSO>();
     public SortedDictionary<int, Item> items = new SortedDictionary<int, Item>();
+
+    public event Action<int, Item> onAddItem;
+    public event Action<int> onRemoveItem;
+    public event Action<int, int> onSwapItem;
 
     public void LoadItemData()
     {
@@ -32,27 +38,6 @@ public class InventoryModel
         }
     }
 
-    /*
-    public void AddItem(ItemSO item, int quantity, ICommand useItemCommand)
-    {
-        Item addItem = items.Find(x => x.itemData.itemId == item.itemId);
-
-        if(addItem != null)
-        {
-            addItem.quantity += quantity;
-        }
-        else
-        {
-            addItem = new Item(item, quantity, useItemCommand);
-
-            items.Add(addItem);
-            //inventoryView.AddItem(items.Count - 1, addItem);
-        }
-
-        //inventoryView.UpdateInventory(items);
-    }
-    */
-
     public void AddItem(Item addItem)
     {
         int itemIdx = SearchInventory(addItem);
@@ -65,26 +50,32 @@ public class InventoryModel
         {
             items[itemIdx] = addItem;
         }
+
+        onAddItem?.Invoke(itemIdx, items[itemIdx]);
     }
 
-    /*
-    public void RemoveItem(Item item)
+    public void RemoveItem(int removeIdx)
     {
-        Item removeItem = items.Find(x=> x.itemData.itemId == item.itemData.itemId);
+        items.Remove(removeIdx);
 
-        if (removeItem != null)
+        onRemoveItem?.Invoke(removeIdx);
+    }
+
+    public void SwapItem(int origin, int swap)
+    {
+        if (!items.ContainsKey(swap))
         {
-            items.Remove(removeItem);
-            //inventoryView.RemoveItem(items.Count - 1);
+            items[swap] = items[origin];
+            items.Remove(origin);
+        }
+        else
+        {
+            Item swapItem = items[origin];
+            items[origin] = items[swap];
+            items[swap] = swapItem;
         }
 
-        //inventoryView.UpdateInventory(items);
-    }
-    */
-
-    public void RemoveItem(int cellNum)
-    {
-        items.Remove(cellNum);
+        onSwapItem?.Invoke(origin, swap);
     }
 
     public int SearchInventory(Item searchItem)

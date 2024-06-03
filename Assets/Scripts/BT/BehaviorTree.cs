@@ -15,7 +15,6 @@ public abstract class BTNode
     public abstract NodeState Evaluate();
 }
 
-// 행동 노드
 public class ActionNode : BTNode
 {
     private Func<NodeState> action;
@@ -31,7 +30,6 @@ public class ActionNode : BTNode
     }
 }
 
-// 조건 노드
 public class ConditionNode : BTNode
 {
     private Func<bool> condition;
@@ -47,7 +45,6 @@ public class ConditionNode : BTNode
     }
 }
 
-// 분기 노드
 public class SequenceNode : BTNode
 {
     private List<BTNode> children = new List<BTNode>();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Skill : ISkillCommand
+public class Skill : ISkill
 {
     protected Player player;
     protected PlayerSkillSO skillData;
@@ -30,9 +30,6 @@ public class Skill : ISkillCommand
 
 public class Uppercut : Skill
 {
-    //public int attackID;
-    //private int skillLevel;
-
     public Uppercut(Player player)
     {
         this.player = player;

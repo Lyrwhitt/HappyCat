@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+    private int cellNum = 0;
+
     public Item item;
     public Image itemImg;
     public TextMeshProUGUI quantity;
@@ -15,7 +17,7 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private ItemTooltip itemTooltip;
     private RectTransform rectTransform;
 
-    private Vector2 offset = new Vector2(470f, -100f);
+    private Vector2 offset = new Vector2(250f, -125f);
 
     private DragDropItem dragDropItem;
     private RectTransform dragDropRectTransform;
@@ -45,6 +47,7 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         cooldownImg = cooldownObj.GetComponent<Image>();
     }
 
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (item == null || isDragging)
@@ -63,11 +66,13 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         if (position.x + tooltipSize.x > canvasRectTransform.rect.width)
         {
-            position.x = canvasRectTransform.rect.width - tooltipSize.x;
+            //position.x = canvasRectTransform.rect.width - tooltipSize.x;
+            position.x = rectTransform.position.x - offset.x;
         }
         if (position.y + tooltipSize.y > canvasRectTransform.rect.height)
         {
-            position.y = canvasRectTransform.rect.height - tooltipSize.y;
+            //position.y = canvasRectTransform.rect.height - tooltipSize.y;
+            position.y = rectTransform.position.y - offset.y;
         }
 
         itemTooltip.transform.position = position;
@@ -108,6 +113,7 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             InventoryCell inventoryCell = eventData.pointerEnter.GetComponent<InventoryCell>();
 
+            /*
             if(inventoryCell.item != null)
             {
                 Item changeItem = inventoryCell.item;
@@ -119,6 +125,8 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 inventoryCell.SetItem(item);
                 ClearCell();
             }
+            */
+            GameManager.Instance.player.inventoryController.SwapInventoryItem(cellNum, inventoryCell.cellNum);
 
             dragDropRectTransform.position = eventData.pointerEnter.transform.position;
 
@@ -128,8 +136,14 @@ public class InventoryCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             Destroy(dragDropItem.gameObject);
             // юс╫ц
-            ClearCell();
+            //ClearCell();
+            GameManager.Instance.player.inventoryController.RemoveInventoryItem(cellNum);
         }
+    }
+
+    public void SetCell(int cellNum)
+    {
+        this.cellNum = cellNum;
     }
 
     public void ClearCell()

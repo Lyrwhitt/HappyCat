@@ -23,22 +23,6 @@ public class PlayerSkillController : MonoBehaviour
 
     private Player player;
 
-    private void Awake()
-    {
-        /*
-        //player = GetComponent<Player>();
-
-        // Player¶û ²¿ÀÓ
-        skillDataManager = new DataManager<Dictionary<int, int>>(Path.Combine(Application.persistentDataPath, "SkillLevelData.json"));
-        playerSkillModel = new PlayerSkillModel(player);
-
-        inputAction = new PlayerInputAction();
-        playerActions = inputAction.Player;
-
-        SetSkillLevelData();
-        */
-    }
-
     private void Start()
     {
         AddInputActionsCallbacks();

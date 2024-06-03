@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,8 @@ public class InventoryController : MonoBehaviour
     public InventoryView inventoryView;
     private InventoryModel inventoryModel;
 
+    public Func<int> onInventoryChange;
+
     private void Awake()
     {
         SetInventoryData();
@@ -21,7 +24,11 @@ public class InventoryController : MonoBehaviour
         inventoryModel = new InventoryModel();
         inventoryModel.SetInventoryList(inventoryData);
 
-        inventoryView.InitializeInventoryView(inventoryModel);
+        inventoryView.InitializeInventoryView(inventoryModel.items, this);
+
+        inventoryModel.onAddItem += inventoryView.OnAddItem;
+        inventoryModel.onRemoveItem += inventoryView.OnRemoveItem;
+        inventoryModel.onSwapItem += inventoryView.OnSwapItem;
     }
 
     private void OnApplicationQuit()
@@ -32,7 +39,17 @@ public class InventoryController : MonoBehaviour
     public void AddInventoryItem(Item addItem)
     {
         inventoryModel.AddItem(addItem);
-        inventoryView.UpdateInventory();
+        //inventoryView.UpdateAllInventoryItem(inventoryModel.items);
+    }
+
+    public void RemoveInventoryItem(int removeIdx)
+    {
+        inventoryModel.RemoveItem(removeIdx);
+    }
+
+    public void SwapInventoryItem(int swapIdx1, int swapIdx2)
+    {
+        inventoryModel.SwapItem(swapIdx1, swapIdx2);
     }
 
     private void SetInventoryData()
@@ -45,6 +62,7 @@ public class InventoryController : MonoBehaviour
             inventoryData = new List<SaveItemData>();
         }
     }
+
 
     private void SaveInventoryData()
     {
