@@ -12,8 +12,6 @@ public class InventoryController : MonoBehaviour
     public InventoryView inventoryView;
     private InventoryModel inventoryModel;
 
-    public Func<int> onInventoryChange;
-
     private void Awake()
     {
         SetInventoryData();
@@ -39,7 +37,6 @@ public class InventoryController : MonoBehaviour
     public void AddInventoryItem(Item addItem)
     {
         inventoryModel.AddItem(addItem);
-        //inventoryView.UpdateAllInventoryItem(inventoryModel.items);
     }
 
     public void RemoveInventoryItem(int removeIdx)

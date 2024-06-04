@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class InventoryModel
 {
     private Dictionary<int, ItemSO> itemData = new Dictionary<int, ItemSO>();
-    public SortedDictionary<int, Item> items = new SortedDictionary<int, Item>();
+    //public SortedDictionary<int, Item> items = new SortedDictionary<int, Item>();
+
+    public int inventoryLimit = 21;
+    public Item[] items = new Item[30];
 
     public event Action<int, Item> onAddItem;
     public event Action<int> onRemoveItem;
@@ -40,9 +42,27 @@ public class InventoryModel
 
     public void AddItem(Item addItem)
     {
+        /*
         int itemIdx = SearchInventory(addItem);
 
         if (items.ContainsKey(itemIdx))
+        {
+            items[itemIdx].quantity += addItem.quantity;
+        }
+        else
+        {
+            items[itemIdx] = addItem;
+        }
+        */
+
+        int itemIdx = SearchInventory(addItem);
+
+        if(itemIdx > inventoryLimit)
+        {
+            return;
+        }
+
+        if (items[itemIdx] != null)
         {
             items[itemIdx].quantity += addItem.quantity;
         }
@@ -56,17 +76,33 @@ public class InventoryModel
 
     public void RemoveItem(int removeIdx)
     {
-        items.Remove(removeIdx);
+        //items.Remove(removeIdx);
+
+        items[removeIdx] = null;
 
         onRemoveItem?.Invoke(removeIdx);
     }
 
     public void SwapItem(int origin, int swap)
     {
+        /*
         if (!items.ContainsKey(swap))
         {
             items[swap] = items[origin];
             items.Remove(origin);
+        }
+        else
+        {
+            Item swapItem = items[origin];
+            items[origin] = items[swap];
+            items[swap] = swapItem;
+        }
+        */
+
+        if (items[swap] == null)
+        {
+            items[swap] = items[origin];
+            items[origin] = null;
         }
         else
         {
@@ -80,8 +116,9 @@ public class InventoryModel
 
     public int SearchInventory(Item searchItem)
     {
-        int minIdx = 0;
-
+        /*
+        int minIdx = 0; 
+        
         foreach (var item in items)
         {
             if(item.Value.itemData.itemId == searchItem.itemData.itemId)
@@ -92,6 +129,29 @@ public class InventoryModel
             if(item.Key == minIdx)
             {
                 minIdx += 1;
+            }
+        }
+        
+        return minIdx;
+        */
+
+        int minIdx = 9999;
+
+        for (int i = 0; i < inventoryLimit; i++)
+        {
+            Item item = items[i];
+
+            if (item == null)
+            {
+                if(i <= minIdx)
+                    minIdx = i;
+
+                continue;
+            }
+
+            if (item.itemData.itemId == searchItem.itemData.itemId)
+            {
+                return i;
             }
         }
 

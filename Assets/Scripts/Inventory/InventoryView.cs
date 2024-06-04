@@ -5,13 +5,11 @@ using UnityEngine.UI;
 
 public class InventoryView : MonoBehaviour
 {
-    private InventoryController inventoryController;
-
     public List<InventoryCell> cells = new List<InventoryCell>();
 
     public Button closeBtn;
 
-    public void InitializeInventoryView(SortedDictionary<int, Item> items, InventoryController controller)
+    public void InitializeInventoryView(Item[] items, InventoryController controller)
     {
         closeBtn.onClick.AddListener(OnCloseBtnClicked);
 
@@ -37,11 +35,19 @@ public class InventoryView : MonoBehaviour
         }
     }
 
-    public void UpdateAllInventoryItem(SortedDictionary<int, Item> items)
+    public void UpdateAllInventoryItem(Item[] items)
     {
+        /*
         foreach (KeyValuePair<int, Item> kvp in items)
         {
             cells[kvp.Key].SetItem(kvp.Value);
+        }
+        */
+
+        for(int i = 0; i < items.Length; i++)
+        {
+            if (items[i] != null)
+                cells[i].SetItem(items[i]);
         }
     }
 
