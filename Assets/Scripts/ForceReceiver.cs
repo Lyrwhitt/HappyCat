@@ -45,6 +45,7 @@ public class ForceReceiver : MonoBehaviour
     public void ResetForceReceiver()
     {
         impact = Vector3.zero;
+        dampingVelocity = Vector3.zero;
         verticalVelocity = 0f;
 
         drag = dragOrigin;

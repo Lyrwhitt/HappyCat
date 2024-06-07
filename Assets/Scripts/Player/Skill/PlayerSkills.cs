@@ -50,7 +50,7 @@ public class Uppercut : Skill
 
     public override float Execute()
     {
-        if (!player.groundDetection.isGrounded)
+        if (!player.groundDetection.isGrounded || !player.stateMachine.isCancelable)
         {
             Debug.Log("Player is not Grounded!");
             return 0;
@@ -92,7 +92,7 @@ public class GatlingPunch : Skill
 
     public override float Execute()
     {
-        if (!player.groundDetection.isGrounded)
+        if (!player.groundDetection.isGrounded || !player.stateMachine.isCancelable)
         {
             Debug.Log("Player is not Grounded!");
             return 0;

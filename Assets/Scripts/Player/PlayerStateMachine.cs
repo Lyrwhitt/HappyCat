@@ -18,6 +18,7 @@ public class PlayerStateMachine : StateMachine
     public PlayerStaggerState staggerState;
     public PlayerStandState standState;
     public PlayerDownState downState;
+    public PlayerPostDelayState postDelayState;
 
     [Header("Skill State")]
     public UppercutState uppercutState;
@@ -36,6 +37,11 @@ public class PlayerStateMachine : StateMachine
     [Header("Attack")]
     public bool isAttacking = false;
     public int comboIndex;
+    public bool isCancelable = true;
+
+    [Header("PostDelay")]
+    public float postDelay = 0f;
+    public bool isPostDelay = false;
 
     public Transform mainCameraTransform;
 
@@ -57,6 +63,8 @@ public class PlayerStateMachine : StateMachine
 
         uppercutState = new UppercutState(this);
         gatlingPunchState = new GatlingPunchState(this);
+
+        postDelayState = new PlayerPostDelayState(this);
 
         mainCameraTransform = Camera.main.transform;
 

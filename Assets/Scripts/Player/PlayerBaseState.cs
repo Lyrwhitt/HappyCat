@@ -55,8 +55,6 @@ public class PlayerBaseState : IState
         input.playerActions.Attack.canceled += OnAttackCanceled;
 
         input.playerActions.Dash.started += OnDashStarted;
-
-        //input.playerActions.Skill_Btn_Q.started += OnBtnQStarted;
     }
 
     protected virtual void RemoveInputActionsCallbacks()
@@ -70,8 +68,6 @@ public class PlayerBaseState : IState
         input.playerActions.Attack.canceled -= OnAttackCanceled;
 
         input.playerActions.Dash.started -= OnDashStarted;
-
-        //input.playerActions.Skill_Btn_Q.started -= OnBtnQStarted;
     }
 
     protected virtual void AddEvents()
@@ -203,6 +199,21 @@ public class PlayerBaseState : IState
     {
         float movementSpeed = stateMachine.movementSpeed * stateMachine.movementSpeedModifier;
         return movementSpeed;
+    }
+
+    protected void SetRotationForward()
+    {
+        Vector3 forward = stateMachine.mainCameraTransform.forward;
+        forward.y = 0;
+        stateMachine.player.transform.rotation = Quaternion.LookRotation(forward);
+    }
+
+    protected void SetPostDelay(float delayTime)
+    {
+        stateMachine.postDelay = delayTime;
+        stateMachine.isPostDelay = true;
+
+        stateMachine.ChangeState(stateMachine.postDelayState);
     }
 
     protected void SetAnimationBool(int animationHash, bool value)

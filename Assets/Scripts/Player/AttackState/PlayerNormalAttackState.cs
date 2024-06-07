@@ -31,6 +31,9 @@ public class PlayerNormalAttackState : PlayerAttackState
         int comboIndex = stateMachine.comboIndex;
         attackInfoData = stateMachine.player.data.attackData.GetAttackInfo(comboIndex);
         stateMachine.player.animator.SetInteger("Combo", comboIndex);
+
+        if(comboIndex == 0)
+            SetRotationForward();
     }
 
     public override void ExitState()

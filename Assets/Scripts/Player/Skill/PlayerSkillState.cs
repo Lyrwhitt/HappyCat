@@ -12,9 +12,13 @@ public class PlayerSkillState : PlayerBaseState
     public override void EnterState()
     {
         stateMachine.movementSpeedModifier = 0;
+        stateMachine.player.forceReceiver.ResetForceReceiver();
+
         base.EnterState();
 
         SetAnimationBool(stateMachine.player.animationData.skillParameterHash, true);
+
+        SetRotationForward();
     }
 
     public override void ExitState()

@@ -18,17 +18,28 @@ public class PlayerDashState : PlayerGroundState
         playerGroundData = stateMachine.player.data.groundedData;
 
         stateMachine.player.forceReceiver.ResetForceReceiver();
+
+
+        Vector3 moveDirection = GetMovementDirection();
+
+        if (moveDirection != Vector3.zero)
+        {
+            stateMachine.player.transform.rotation = Quaternion.LookRotation(moveDirection);
+        }
+
         stateMachine.player.forceReceiver.AddForce(stateMachine.player.transform.forward * playerGroundData.dashPower);
+
+
         stateMachine.player.forceReceiver.drag = playerGroundData.dashDrag;
 
-        SetAnimationBool(stateMachine.player.animationData.dashParameterHash, true);
+        SetAnimationTrigger(stateMachine.player.animationData.dashParameterHash);
     }
 
     public override void ExitState()
     {
         base.ExitState();
 
-        SetAnimationBool(stateMachine.player.animationData.dashParameterHash, false);
+        stateMachine.player.forceReceiver.ResetForceReceiver();
     }
 
     public override void UpdateState()
@@ -42,5 +53,13 @@ public class PlayerDashState : PlayerGroundState
             stateMachine.ChangeState(stateMachine.idleState);
         }
         
+    }
+
+    protected override void AddInputActionsCallbacks()
+    {
+    }
+
+    protected override void RemoveInputActionsCallbacks()
+    {
     }
 }

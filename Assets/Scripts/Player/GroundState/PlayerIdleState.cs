@@ -13,11 +13,15 @@ public class PlayerIdleState : PlayerGroundState
     {
         stateMachine.movementSpeedModifier = 0f;
         base.EnterState();
+
+        SetAnimationBool(stateMachine.player.animationData.idleParameterHash, true);
     }
 
     public override void ExitState()
     {
         base.ExitState();
+
+        SetAnimationBool(stateMachine.player.animationData.idleParameterHash, false);
     }
 
     public override void UpdateState()
