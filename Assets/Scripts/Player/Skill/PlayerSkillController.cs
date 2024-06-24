@@ -59,7 +59,9 @@ public class PlayerSkillController : MonoBehaviour
 
     private void SaveShortcutData()
     {
-        for(int i = 0; i < playerSkillView.skillCells.Count; i++)
+        shortcutData.Clear();
+
+        for (int i = 0; i < playerSkillView.skillCells.Count; i++)
         {
             DragDropSkillItem skill = playerSkillView.skillCells[i].GetSkill();
 
